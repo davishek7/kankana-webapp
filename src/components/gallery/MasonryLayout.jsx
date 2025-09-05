@@ -9,7 +9,7 @@ function MasonryLayout({ galleryImages }) {
         columnGap: "1rem",
       }}
     >
-      {galleryImages.length > 0 && galleryImages.map((image) => (
+      {galleryImages.map((image) => (
         <div
           key={image.id}
           style={{ breakInside: "avoid", marginBottom: "1rem" }}

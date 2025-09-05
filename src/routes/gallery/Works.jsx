@@ -3,6 +3,7 @@ import MasonryLayout from "../../components/gallery/MasonryLayout"
 
 function Works() {
   const galleryImages = useLoaderData()
+  console.log(galleryImages)
 
   return (
     <section className="container py-5" id="work">
