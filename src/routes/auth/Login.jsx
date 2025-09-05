@@ -60,9 +60,9 @@ export default function Login() {
             Login
           </button>
         </div>
-        <p className="text-center mb-0">
+        {/* <p className="text-center mb-0">
           Don’t have an account? <Link to="/auth/register">Register</Link>
-        </p>
+        </p> */}
       </Form>
     </div>
   );

@@ -10,10 +10,10 @@ import Invoice from "./routes/admin/Invoice.jsx";
 import { bookingLoader } from "./loaders/booking.loader.js";
 import { worksLoader } from "./loaders/works.loader.js";
 import Login from "./routes/auth/Login.jsx";
-import Register from "./routes/auth/Register.jsx";
+// import Register from "./routes/auth/Register.jsx";
 import AuthLayout from "./layouts/AuthLayout.jsx";
 import { loginAction } from "./actions/login.action.js";
-import { registerAction } from "./actions/register.action.js";
+// import { registerAction } from "./actions/register.action.js";
 import AdminLayout from "./layouts/AdminLayout.jsx";
 import Bookings from "./routes/admin/Bookings.jsx";
 import Gallery from "./routes/admin/Gallery.jsx";
@@ -59,11 +59,11 @@ const router = createBrowserRouter([
         element: <Login />,
         action: loginAction,
       },
-      {
-        path: "register",
-        element: <Register />,
-        action: registerAction,
-      },
+      // {
+      //   path: "register",
+      //   element: <Register />,
+      //   action: registerAction,
+      // },
     ],
   },
   {

@@ -25,7 +25,7 @@ function About() {
                   Durgapur · Andal · Mejia · Barjora · Asansol · All over WB
                 </p>
                 <a
-                  href="https://wa.me/8016127841?text=Hi%20Kankana%2C%20is%20my%20date%20available%3F"
+                  href="https://wa.me/+918016127841?text=Hi%20I'd%20like%20to%20inquire%20about%20bridal%20makeup"
                   target="_blank"
                   rel="noreferrer"
                   className="btn btn-danger w-100 mt-2"
