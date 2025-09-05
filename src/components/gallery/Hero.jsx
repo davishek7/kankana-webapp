@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_URL } from "../../constants/api.constants";
 
 function Hero() {
   const [heroImage, setHeroImage] = useState(null);
@@ -6,7 +7,7 @@ function Hero() {
   useEffect(() => {
     const getHeroImage = async () => {
       const res = await fetch(
-        "http://127.0.0.1:8000/api/gallery?category=hero"
+      `${API_URL}/gallery?category=hero`
       );
       const resData = await res.json();
       const data = await resData.data;

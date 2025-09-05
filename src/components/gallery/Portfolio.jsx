@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MasonryLayout from "./MasonryLayout";
+import { API_URL } from "../../constants/api.constants";
 
 function Portfolio() {
   const [galleryImages, setGalleryImages] = useState([]);
   useEffect(() => {
     const getGalleryImages = async () => {
       const res = await fetch(
-        "http://127.0.0.1:8000/api/gallery?category=gallery"
+        `${API_URL}/gallery?category=gallery`
       );
       const resData = await res.json();
       const data = await resData.data;
