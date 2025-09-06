@@ -9,14 +9,22 @@ function Hero() {
       <div className="container">
         <div className="row align-items-center g-4">
           <div className="col-md-6">
-            <h1 className="fw-bold display-5">
+            {/* <h1 className="fw-bold display-5">
               Timeless <span className="text-danger">Bridal</span> Looks for
               Your Big Day
             </h1>
             <p className="mt-3 text-muted">
               Durgapur · Andal · Mejia · Barjora · Asansol · All over WB — premium bridal,
               reception, and party makeup.
-            </p>
+            </p> */}
+              <h1 className="fw-bold display-5">Professional <span className="text-danger">Bridal & Party</span> Makeup Artist in <span className="text-info">Bankura, Durgapur & Asansol</span></h1>
+              <p className="mt-3 text-muted">
+                Looking for the best <strong>bridal makeup artist in Bankura</strong>? 
+                Kankana's Makeover offers stunning <strong>wedding, reception, haldi and party makeovers</strong> 
+                {" "}across <strong>Bankura, Durgapur, and Asansol</strong>. 
+                From traditional Bengali bridal styles to modern HD and Waterproof looks, 
+                we ensure you shine on your special day.
+              </p>
             <div className="d-flex gap-2 mt-4">
               <a href="#work" className="btn btn-dark">
                 View Portfolio
