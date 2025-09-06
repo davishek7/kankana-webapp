@@ -171,6 +171,23 @@ function Invoice() {
           Print Invoice
         </button>
       </div>
+      {/* Print-specific CSS */}
+      <style>
+        {`
+          @media print {
+            .no-print {
+              display: none !important;
+            }
+            body {
+              -webkit-print-color-adjust: exact;
+              margin: 20px;
+            }
+            table, th, td {
+              border: 1px solid black;
+            }
+          }
+        `}
+      </style>
     </>
   );
 }

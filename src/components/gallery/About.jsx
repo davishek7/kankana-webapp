@@ -12,10 +12,10 @@ function About() {
                 long-wear looks for day and night ceremonies.
               </p>
               <ul className="row row-cols-2 g-2 list-unstyled small">
-                <li>✔ HD / Airbrush makeup</li>
+                <li>✔ HD, Waterproof makeup</li>
                 <li>✔ On-location services</li>
                 <li>✔ Hairstyling & draping</li>
-                <li>✔ Trial sessions on request</li>
+                <li>✔ Photoshoot makeup for model portfolios</li>
               </ul>
             </div>
             <div className="col-md-4">

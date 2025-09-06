@@ -28,7 +28,7 @@ function Sidebar() {
               to="/admin/gallery"
             >
               <div className="sb-nav-link-icon">
-                <i className="fa-solid fa-book"></i>
+                <i className="fa-solid fa-images"></i>
               </div>
               Gallery
             </Link>
@@ -39,7 +39,7 @@ function Sidebar() {
               to="/admin/bookings"
             >
               <div className="sb-nav-link-icon">
-                <i className="fa-solid fa-book"></i>
+                <i className="fa-solid fa-file-invoice-dollar"></i>
               </div>
               Bookings
             </Link>
