@@ -29,7 +29,7 @@ function About() {
                 Quick questions? Tap below to chat instantly on WhatsApp — we’ll get back to you within minutes.
               </small>
               <a
-                href="https://wa.me/+918016127841?text=Hi%20I'd%20like%20to%20inquire%20about%20bridal%20makeup"
+                href="https://wa.me/918016127841?text=Hi%20I'd%20like%20to%20inquire%20about%20bridal%20makeup"
                 target="_blank"
                 rel="noreferrer"
                 className="btn btn-danger w-100 mt-2"

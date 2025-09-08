@@ -2,7 +2,7 @@ import useCachedFetch from "../../hooks/useCachedFetch";
 import { API_URL } from "../../constants/api.constants";
 
 function Hero() {
-  const heroImage = useCachedFetch(`${API_URL}/gallery?category=hero&limit=1`, "gallery_home_hero")
+  const {data} = useCachedFetch(`${API_URL}/gallery?category=hero&limit=1`, "gallery_home_hero")
 
   return (
     <section className="py-5 bg-light">
@@ -35,9 +35,9 @@ function Hero() {
             </div>
           </div>
           <div className="col-md-6">
-            {heroImage ? (
+            {data ? (
               <img
-                src={heroImage.url}
+                src={data.url}
                 alt="That's Me"
                 className="img-fluid rounded shadow"
               />

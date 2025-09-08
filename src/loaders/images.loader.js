@@ -5,8 +5,11 @@ export async function imagesLoader(){
         "Content-Type": "applicatioin/json",
     }
 
-    const response = await apiFetch("gallery/", { headers })
+    const response = await apiFetch("gallery/?limit=15", { headers })
     const responseData = await response.json()
     const data = await responseData.data
-    return data
+    const initialRows = data.images
+    const total = data.total
+    const limit = data.limit
+    return {initialRows, total, limit}
 }

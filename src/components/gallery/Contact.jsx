@@ -67,7 +67,7 @@ function Contact() {
               Send Message
             </button>
             <a
-              href="https://wa.me/8016127841?text=Hi%2C%20I'd%20like%20to%20book%20bridal%20makeup"
+              href="https://wa.me/918016127841?text=Hi%2C%20I'd%20like%20to%20book%20bridal%20makeup"
               target="_blank"
               rel="noreferrer"
               className="btn btn-outline-secondary"

@@ -52,7 +52,7 @@ function Navbar() {
               </ul>
             )}
             <Link
-              to="https://wa.me/+918016127841?text=Hi%20I'd%20like%20to%20inquire%20about%20bridal%20makeup"
+              to="https://wa.me/918016127841?text=Hi%20I'd%20like%20to%20inquire%20about%20bridal%20makeup"
               target="_blank"
               rel="noreferrer"
               className="ms-auto btn btn-pink"

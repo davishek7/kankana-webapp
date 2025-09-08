@@ -1,25 +1,41 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import iconImg from "../../assets/kankana.png";
 import { useLoaderData, Link } from "react-router-dom";
+import html2pdf from "html2pdf.js";
+
 
 function Invoice() {
   const data = useLoaderData();
+  const invoiceRef = useRef();
 
-  const handlePrint = async () => {
-    console.log("Printitng...");
-    const invoiceDiv = document.getElementById("invoice").innerHTML;
-    const originalPage = document.body.innerHTML;
+  const handleDownload = () => {
+    const element = invoiceRef.current;
+    const opt = {
+      margin:       3,
+      filename:     `${data.booking_id}.pdf`,
+      image:        { type: 'jpeg', quality: 0.7 },
+      html2canvas:  { scale: 2 },
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true }
+    };
 
-    // Replace body with invoice div only
-    document.body.innerHTML = invoiceDiv;
-
-    // Trigger print dialog
-    window.print();
-
-    // Restore original page
-    document.body.innerHTML = originalPage;
-    window.location.reload(); // reload to restore event bindings
+    html2pdf().set(opt).from(element).save();
   };
+
+  // const handlePrint = async () => {
+  //   console.log("Printitng...");
+  //   const invoiceDiv = document.getElementById("invoice").innerHTML;
+  //   const originalPage = document.body.innerHTML;
+
+  //   // Replace body with invoice div only
+  //   document.body.innerHTML = invoiceDiv;
+
+  //   // Trigger print dialog
+  //   window.print();
+
+  //   // Restore original page
+  //   document.body.innerHTML = originalPage;
+  //   window.location.reload(); // reload to restore event bindings
+  // };
 
   useEffect(() => {
     document.title = data.booking_id;
@@ -28,6 +44,7 @@ function Invoice() {
   return (
     <>
       <div
+        ref={invoiceRef}
         className="mt-4 border mx-auto bg-white shadow p-4 rounded"
         id="invoice"
         style={{ maxWidth: "800px" }}
@@ -167,27 +184,13 @@ function Invoice() {
       {/* Print Button */}
       <div className="d-flex justify-content-center mb-4">
         <Link className="btn btn-outline-primary mt-3 mx-3" to={`/admin/bookings/${data.booking_id}`}>Go Back</Link>
-        <button onClick={handlePrint} className="btn btn-primary mt-3">
+        {/* <button onClick={handlePrint} className="btn btn-primary mt-3">
           Print Invoice
+        </button> */}
+        <button onClick={handleDownload} className="btn btn-outline-danger mt-3">
+          Download <i className="fa-solid fa-file-pdf"></i>
         </button>
       </div>
-      {/* Print-specific CSS */}
-      <style>
-        {`
-          @media print {
-            .no-print {
-              display: none !important;
-            }
-            body {
-              -webkit-print-color-adjust: exact;
-              margin: 20px;
-            }
-            table, th, td {
-              border: 1px solid black;
-            }
-          }
-        `}
-      </style>
     </>
   );
 }
