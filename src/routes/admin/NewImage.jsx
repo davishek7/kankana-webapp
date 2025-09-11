@@ -13,7 +13,7 @@ export default function NewImage() {
       return;
     }
     toast.success(data?.message);
-    navigate("/admin/gallery");
+    navigate("/gallery");
   }, [data, navigate]);
 
   const handleImageChange = (e) => {

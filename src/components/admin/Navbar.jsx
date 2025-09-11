@@ -12,7 +12,7 @@ function Navbar({ onToggleSidebar }) {
 
   return (
     <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-      <Link className="navbar-brand d-flex align-items-center" to="/admin">
+      <Link className="navbar-brand d-flex align-items-center" to="/">
         <span className="fs-3">
           <img src={iconImg} alt="logo" style={{width: "48px", height: "48px"}}/>
         </span>
@@ -60,7 +60,7 @@ function Navbar({ onToggleSidebar }) {
             aria-labelledby="navbarDropdown"
           >
             <li>
-              <Link className="dropdown-item" to="/admin/profile">
+              <Link className="dropdown-item" to="/profile">
                 <i className="fa-solid fa-user"></i> Profile
               </Link>
             </li>
@@ -68,7 +68,7 @@ function Navbar({ onToggleSidebar }) {
               <hr className="dropdown-divider" />
             </li>
             <li>
-              <Link className="dropdown-item" to="#" onClick={handleLogout}>
+              <Link className="dropdown-item" onClick={handleLogout}>
                 <i className="fa-solid fa-arrow-right-from-bracket"></i> Logout
               </Link>
             </li>

@@ -23,7 +23,7 @@ export default function Login() {
       actionData?.data.auth_tokens.access_token,
       actionData?.data.auth_tokens.refresh_token
     );
-    navigate("/admin", { replace: true });
+    navigate("/", { replace: true });
   }, [actionData, saveAuth, navigate]);
 
   return (

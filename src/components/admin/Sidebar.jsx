@@ -14,7 +14,7 @@ function Sidebar() {
               className={`nav-link ${
                 location.pathname === "/" ? "active" : ""
               }`}
-              to="/admin"
+              to="/"
             >
               <div className="sb-nav-link-icon">
                 <i className="fa-solid fa-gauge-high"></i>
@@ -25,7 +25,7 @@ function Sidebar() {
               className={`nav-link ${
                 location.pathname === "/gallery" ? "active" : ""
               }`}
-              to="/admin/gallery"
+              to="/gallery"
             >
               <div className="sb-nav-link-icon">
                 <i className="fa-solid fa-images"></i>
@@ -34,9 +34,9 @@ function Sidebar() {
             </Link>
             <Link
               className={`nav-link ${
-                location.pathname === "/Bookings" ? "active" : ""
+                location.pathname === "/bookings" ? "active" : ""
               }`}
-              to="/admin/bookings"
+              to="/bookings"
             >
               <div className="sb-nav-link-icon">
                 <i className="fa-solid fa-file-invoice-dollar"></i>
@@ -47,7 +47,7 @@ function Sidebar() {
               className={`nav-link ${
                 location.pathname === "/contacts" ? "active" : ""
               }`}
-              to="/admin/contacts"
+              to="/contacts"
             >
               <div className="sb-nav-link-icon">
                 <i className="fa-solid fa-address-card"></i>

@@ -3,12 +3,8 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "./context/AuthContext.jsx";
-import RootLayout from "./layouts/RootLayout.jsx";
-import Home from "./routes/gallery/Home.jsx";
-import Works from "./routes/gallery/Works.jsx";
 import Invoice from "./routes/admin/Invoice.jsx";
 import { bookingLoader } from "./loaders/booking.loader.js";
-import { worksLoader } from "./loaders/works.loader.js";
 import Login from "./routes/auth/Login.jsx";
 // import Register from "./routes/auth/Register.jsx";
 import AuthLayout from "./layouts/AuthLayout.jsx";
@@ -37,37 +33,6 @@ import { contactDetailsLoader } from "./loaders/contactDetails.loader.js";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/works",
-        element: <Works />,
-        loader: worksLoader,
-      },
-    ],
-  },
-  {
-    path: "/auth",
-    element: <AuthLayout />,
-    children: [
-      {
-        path: "login",
-        element: <Login />,
-        action: loginAction,
-      },
-      // {
-      //   path: "register",
-      //   element: <Register />,
-      //   action: registerAction,
-      // },
-    ],
-  },
-  {
-    path: "/admin",
     element: <AdminLayout />,
     children: [
       {
@@ -87,12 +52,12 @@ const router = createBrowserRouter([
       {
         path: "gallery/upload",
         element: <NewImage />,
-        action: imageUploadAction
+        action: imageUploadAction,
       },
       {
         path: "gallery/:image_id",
         element: <ImageDetails />,
-        loader: imageDetailsLoader
+        loader: imageDetailsLoader,
       },
       {
         path: "bookings",
@@ -102,12 +67,12 @@ const router = createBrowserRouter([
       {
         path: "bookings/new",
         element: <NewBooking />,
-        action: newBookingAction
+        action: newBookingAction,
       },
       {
         path: "bookings/:booking_id",
         element: <BookingDetails />,
-        loader: bookingLoader
+        loader: bookingLoader,
       },
       {
         path: "contacts",
@@ -117,8 +82,24 @@ const router = createBrowserRouter([
       {
         path: "contacts/:contact_id",
         element: <ContactDetails />,
-        loader: contactDetailsLoader
+        loader: contactDetailsLoader,
       },
+    ],
+  },
+  {
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "login",
+        element: <Login />,
+        action: loginAction,
+      },
+      // {
+      //   path: "register",
+      //   element: <Register />,
+      //   action: registerAction,
+      // },
     ],
   },
   {

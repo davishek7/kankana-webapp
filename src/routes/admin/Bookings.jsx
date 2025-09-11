@@ -36,7 +36,7 @@ function Bookings() {
             Manage Bookings
           </h2>
           <Link
-            to="/admin/bookings/new"
+            to="/bookings/new"
             className="btn btn-outline-info float-end"
           >
             <i className="fa-solid fa-plus"></i> Add New Booking

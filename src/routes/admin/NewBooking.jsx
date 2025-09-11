@@ -212,6 +212,14 @@ export default function NewBooking() {
             }
           />
         </div>
+        <div className="col-md-3">
+          <label className="form-label">Advance Date</label>
+          <input
+            name="advance_date"
+            type="date"
+            className="form-control"
+          />
+        </div>
         <div className="col-md-2">
           <label className="form-label">Discount</label>
           <input

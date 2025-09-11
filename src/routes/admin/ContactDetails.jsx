@@ -17,7 +17,7 @@ function ContactDetails() {
     const resData = await res.json()
     if(resData.status === 200){
       toast.success(resData.message)
-      navigate("/admin/contacts")
+      navigate("/contacts")
     } else {
       toast.error(resData.message)
     }
@@ -45,7 +45,7 @@ return (
 
           {/* Action Buttons */}
           <div className="d-flex justify-content-end gap-2">
-            <Link to="/admin/contacts" className="btn btn-outline-primary btn-sm">
+            <Link to="/contacts" className="btn btn-outline-primary btn-sm">
               <i className="fa-solid fa-arrow-left"></i> Back
             </Link>
             <button className="btn btn-danger btn-sm" onClick={handleDelete}>

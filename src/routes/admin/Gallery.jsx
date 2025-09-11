@@ -36,7 +36,7 @@ function Gallery() {
             Manage Uploaded Images
           </h2>
           <Link
-            to="/admin/gallery/upload"
+            to="/gallery/upload"
             className="btn btn-outline-info float-end"
           >
             <i className="fa-solid fa-cloud-arrow-up"></i> Upload New Image
