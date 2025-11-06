@@ -45,6 +45,10 @@ function DataTable({
                         alt="preview"
                         className="img-fluid"
                       />
+                    ) : col.accessorKey === "invoice_url" ? (
+                      <a href={row[col.accessorKey]} target="_blank" rel="noopener noreferrer" className="btn btn btn-danger btn-sm">
+                        <i className="fa-solid fa-file-pdf"></i>
+                      </a>
                     ) : (
                       row[col.accessorKey]
                     )}

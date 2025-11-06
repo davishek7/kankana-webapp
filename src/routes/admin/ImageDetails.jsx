@@ -38,7 +38,7 @@ export default function ImageDetails() {
         return
     }
     toast.success(resData.message)
-    navigate(`/admin/gallery/${image.id}`)
+    navigate(`/gallery/${image.id}`)
     setShowEditModal(false);
   };
 

@@ -1,45 +1,63 @@
-import { useEffect, useRef } from "react";
+import { useRef, useState } from "react";
 import iconImg from "../../assets/kankana.png";
 import { useLoaderData, Link } from "react-router-dom";
 import html2pdf from "html2pdf.js";
-
+import { apiFetch } from "../../utils/api";
+import { toast } from "react-toastify";
 
 function Invoice() {
-  const data = useLoaderData();
+  const booking = useLoaderData();
   const invoiceRef = useRef();
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState(booking);
 
-  const handleDownload = () => {
-    const element = invoiceRef.current;
-    const opt = {
-      margin:       3,
-      filename:     `${data.booking_id}.pdf`,
-      image:        { type: 'jpeg', quality: 0.7 },
-      html2canvas:  { scale: 2 },
-      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true }
-    };
+  const handleGenerateAndUpload = async () => {
+    try {
+      const element = invoiceRef.current;
+      const opt = {
+        margin: 3,
+        filename: `${data.booking_id}.pdf`,
+        image: { type: "jpeg", quality: 0.7 },
+        html2canvas: { scale: 2 },
+        jsPDF: {
+          unit: "mm",
+          format: "a4",
+          orientation: "portrait",
+          compress: true,
+        },
+      };
 
-    html2pdf().set(opt).from(element).save();
+      const pdfBlob = await html2pdf().set(opt).from(element).output("blob");
+
+      const formData = new FormData();
+      formData.append("file", pdfBlob, `${data.booking_id}.pdf`);
+      formData.append("booking_id", data.booking_id);
+
+      const res = await apiFetch("booking/upload-invoice", {
+        method: "POST",
+        body: formData,
+      });
+      if (!res.ok) throw new Error("Upload failed");
+      const resData = await res.json();
+      if (resData.status !== 201) {
+        toast.error("Failed to upload invoice.");
+        return;
+      }
+      toast.success("Invoice uploaded successfully.");
+      setData(resData.data)
+    } catch (err) {
+      toast.error("Failed to send invoice.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // const handlePrint = async () => {
-  //   console.log("Printitng...");
-  //   const invoiceDiv = document.getElementById("invoice").innerHTML;
-  //   const originalPage = document.body.innerHTML;
-
-  //   // Replace body with invoice div only
-  //   document.body.innerHTML = invoiceDiv;
-
-  //   // Trigger print dialog
-  //   window.print();
-
-  //   // Restore original page
-  //   document.body.innerHTML = originalPage;
-  //   window.location.reload(); // reload to restore event bindings
-  // };
-
-  useEffect(() => {
-    document.title = data.booking_id;
-  }, [data]);
+  const handleWhatsAppShare = async () => {
+    const message = `Hello! Here is your invoice for booking ${data.booking_id}:\n${data.download_url}`;
+    const encodedMsg = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${data.customer_phone_number}?text=${encodedMsg}`;
+    window.open(whatsappUrl, "_blank");
+  };
 
   return (
     <>
@@ -174,21 +192,43 @@ function Invoice() {
             <p className="mb-1">
               <strong>Paid (incl. advance):</strong> ₹{data.paid_amount}
             </p>
-            <p className="fs-5 fw-bold text-danger mb-0">
-              <strong>Net Payable:</strong> ₹{data.due_amount}
-            </p>
+            {data.payment_status !== "Fully Paid" && (
+              <p className="fs-5 fw-bold text-danger mb-0">
+                <strong>Net Payable:</strong> ₹{data.due_amount}
+              </p>
+            )}
           </div>
+        </div>
+        <hr />
+        <div className="small text-muted mt-2">
+          <strong>Disclaimer :</strong> Advance payments are non-refundable in
+          case of cancellation. Rescheduling is permitted for the same booking
+          or service items, subject to availability.
         </div>
       </div>
 
       {/* Print Button */}
       <div className="d-flex justify-content-center mb-4">
-        <Link className="btn btn-outline-primary mt-3 mx-3" to={`/admin/bookings/${data.booking_id}`}>Go Back</Link>
-        {/* <button onClick={handlePrint} className="btn btn-primary mt-3">
-          Print Invoice
-        </button> */}
-        <button onClick={handleDownload} className="btn btn-outline-danger mt-3">
-          Download <i className="fa-solid fa-file-pdf"></i>
+        <Link
+          className="btn btn-outline-primary mt-3 mx-3"
+          to={`/bookings/${data.booking_id}`}
+        >
+          <i className="fa-solid fa-arrow-left"></i> Back
+        </Link>
+        <button
+          onClick={handleGenerateAndUpload}
+          className="btn btn-outline-info mt-3"
+        >
+          <i className="fa-solid fa-cloud-arrow-up"></i>{" "}
+          {loading ? "Uploading..." : "Upload Latest Invoice"}
+        </button>
+        <button
+          onClick={handleWhatsAppShare}
+          className="btn btn-outline-success mt-3 mx-3"
+          disabled={!data.download_url}
+        >
+          <i className="fa-brands fa-whatsapp"></i>{" "}
+          {loading ? "Sending Invoice..." : "Send via WhatsApp"}
         </button>
       </div>
     </>

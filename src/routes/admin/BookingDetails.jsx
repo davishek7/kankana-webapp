@@ -26,7 +26,6 @@ export default function BookingDetails() {
 
   const handleItemChange = (e) => {
     setNewItem({ ...newItem, [e.target.name]: e.target.value });
-    console.log(newItem);
   };
 
   const handleAddPayment = async () => {
@@ -41,7 +40,7 @@ export default function BookingDetails() {
       return;
     }
     toast.success(resData.message);
-    navigate(`/admin/bookings/${booking.booking_id}`);
+    navigate(`/bookings/${booking.booking_id}`);
     document.getElementById("closePaymentModal").click();
     setNewPayment({
       amount: "",
@@ -63,7 +62,7 @@ export default function BookingDetails() {
       return;
     }
     toast.success(resData.message);
-    navigate(`/admin/bookings/${booking.booking_id}`);
+    navigate(`/bookings/${booking.booking_id}`);
     document.getElementById("closeItemModal").click();
     setNewItem({ item_type: "HD", item_category: "Bridal", rate: "", date: "" });
   };
