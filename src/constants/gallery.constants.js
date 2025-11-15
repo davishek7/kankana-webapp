@@ -1,5 +1,4 @@
 export const GALLERY_COLUMNS = [
-  { header: "ID", accessorKey: "id" },
   {header: "Image", accessorKey: "thumb_url"},
   { header: "Category", accessorKey: "category" },
   { header: "Uploaded at", accessorKey: "created_at" }
