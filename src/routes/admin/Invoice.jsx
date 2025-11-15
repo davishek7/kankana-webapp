@@ -44,7 +44,7 @@ function Invoice() {
         return;
       }
       toast.success("Invoice uploaded successfully.");
-      setData(resData.data)
+      setData(resData.data);
     } catch (err) {
       toast.error("Failed to send invoice.");
     } finally {
@@ -53,7 +53,7 @@ function Invoice() {
   };
 
   const handleWhatsAppShare = async () => {
-    const message = `Hello! Here is your invoice for booking ${data.booking_id}:\n${data.download_url}`;
+    const message = `Thank you for your booking.Your invoice (Booking ID: ${data.booking_id}) can be accessed here:${data.download_url}`;
     const encodedMsg = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/+91${data.customer_phone_number}?text=${encodedMsg}`;
     window.open(whatsappUrl, "_blank");
