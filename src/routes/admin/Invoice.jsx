@@ -55,7 +55,7 @@ function Invoice() {
   const handleWhatsAppShare = async () => {
     const message = `Hello! Here is your invoice for booking ${data.booking_id}:\n${data.download_url}`;
     const encodedMsg = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${data.customer_phone_number}?text=${encodedMsg}`;
+    const whatsappUrl = `https://wa.me/+91${data.customer_phone_number}?text=${encodedMsg}`;
     window.open(whatsappUrl, "_blank");
   };
 
