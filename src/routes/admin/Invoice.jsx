@@ -4,6 +4,7 @@ import { useLoaderData, Link } from "react-router-dom";
 import html2pdf from "html2pdf.js";
 import { apiFetch } from "../../utils/api";
 import { toast } from "react-toastify";
+import { API_URL } from "../../constants/api.constants";
 
 function Invoice() {
   const booking = useLoaderData();
@@ -12,11 +13,13 @@ function Invoice() {
   const [data, setData] = useState(booking);
 
   const handleGenerateAndUpload = async () => {
+    let customerNameInCapital = data.customer_name.toUpperCase().replace(/ /g, '-')
+    const invoiceFileName = `${customerNameInCapital}-${data.booking_id}`
     try {
       const element = invoiceRef.current;
       const opt = {
         margin: 3,
-        filename: `${data.booking_id}.pdf`,
+        filename: `${invoiceFileName}.pdf`,
         image: { type: "jpeg", quality: 0.7 },
         html2canvas: { scale: 2 },
         jsPDF: {
@@ -30,7 +33,7 @@ function Invoice() {
       const pdfBlob = await html2pdf().set(opt).from(element).output("blob");
 
       const formData = new FormData();
-      formData.append("file", pdfBlob, `${data.booking_id}.pdf`);
+      formData.append("file", pdfBlob, `${invoiceFileName}.pdf`);
       formData.append("booking_id", data.booking_id);
 
       const res = await apiFetch("booking/upload-invoice", {
@@ -53,7 +56,8 @@ function Invoice() {
   };
 
   const handleWhatsAppShare = async () => {
-    const message = `Thank you for your booking.Your invoice (Booking ID: ${data.booking_id}) can be accessed here:${data.download_url}`;
+    const invoice_download_url = `${API_URL}/booking/download-invoice/${booking.booking_id}`
+    const message = `Thank you for your booking.Your invoice (Booking ID: ${data.booking_id}) can be accessed here: ${invoice_download_url}`;
     const encodedMsg = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/+91${data.customer_phone_number}?text=${encodedMsg}`;
     window.open(whatsappUrl, "_blank");
@@ -225,7 +229,7 @@ function Invoice() {
         <button
           onClick={handleWhatsAppShare}
           className="btn btn-outline-success mt-3 mx-3"
-          disabled={!data.download_url}
+          disabled={!data.invoice_url}
         >
           <i className="fa-brands fa-whatsapp"></i>{" "}
           {loading ? "Sending Invoice..." : "Send via WhatsApp"}

@@ -136,7 +136,7 @@ export default function BookingDetails() {
             </tr>
           </thead>
           <tbody>
-            {booking.items?.map((item, i) => (
+            {booking.items ? (booking.items?.map((item, i) => (
               <tr key={i}>
                 <td>{i + 1}</td>
                 <td>{item.item_type}</td>
@@ -144,7 +144,7 @@ export default function BookingDetails() {
                 <td>₹{item.rate}</td>
                 <td>{item.date}</td>
               </tr>
-            ))}
+            ))) : <p>No Booking Items Added</p>}
           </tbody>
         </table>
       </div>
@@ -160,7 +160,7 @@ export default function BookingDetails() {
           + Add Payment
         </button>
       </div>
-      <div className="table-responsive">
+      <div className="table-responsive mb-4">
         <table className="table table-bordered">
           <thead>
             <tr>
@@ -172,7 +172,7 @@ export default function BookingDetails() {
             </tr>
           </thead>
           <tbody>
-            {booking.payments?.map((pay, i) => (
+            {booking.payments ? (booking.payments?.map((pay, i) => (
               <tr key={i}>
                 <td>{i + 1}</td>
                 <td>₹{pay.amount}</td>
@@ -180,10 +180,52 @@ export default function BookingDetails() {
                 <td>{pay.payment_type}</td>
                 <td>{pay.date}</td>
               </tr>
-            ))}
+            ))) :             (<tr>
+              <td
+                colSpan={5}
+                className="text-center"
+              >
+                No data found
+              </td>
+            </tr>
+          )}
           </tbody>
         </table>
       </div>
+
+      {/* Expenses */}
+      {/* <div className="d-flex justify-content-between align-items-center mb-2">
+        <h5>Expenses</h5>
+        <button
+          className="btn btn-sm btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#itemModal"
+        >
+          + Add Expense
+        </button>
+      </div>
+      <div className="table-responsive">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Type</th>
+              <th>Rate</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {booking.items?.map((item, i) => (
+              <tr key={i}>
+                <td>{i + 1}</td>
+                <td>{item.item_type}</td>
+                <td>₹{item.rate}</td>
+                <td>{item.date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div> */}
 
       <div className="mt-3">
         <strong>Status:</strong>{" "}
