@@ -1,7 +1,7 @@
 import { apiFetch } from "../utils/api";
 
-export async function imageDetailsLoader({ params }){
-    const response = await apiFetch(`gallery/${params.image_id}`)
+export async function bookingIdLoader(){
+    const response = await apiFetch("booking/booking-id/list")
     const responseData = await response.json()
     const data = await responseData.data
     return data

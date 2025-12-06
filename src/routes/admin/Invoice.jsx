@@ -1,13 +1,14 @@
 import { useRef, useState } from "react";
 import iconImg from "../../assets/kankana.png";
-import { useLoaderData, Link } from "react-router-dom";
+import { useLoaderData, Link, useNavigate } from "react-router-dom";
 import html2pdf from "html2pdf.js";
 import { apiFetch } from "../../utils/api";
 import { toast } from "react-toastify";
 import { API_URL } from "../../constants/api.constants";
 
 function Invoice() {
-  const booking = useLoaderData();
+  const {booking} = useLoaderData();
+  const navigate = useNavigate()
   const invoiceRef = useRef();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(booking);
@@ -56,8 +57,8 @@ function Invoice() {
   };
 
   const handleWhatsAppShare = async () => {
-    const invoice_download_url = `${API_URL}/booking/download-invoice/${booking.booking_id}`
-    const message = `Thank you for your booking.Your invoice (Booking ID: ${data.booking_id}) can be accessed here: ${invoice_download_url}`;
+    const invoice_download_url = `${booking.invoice_url}`
+    const message = `Thank you for your booking. Download your invoice (ID: ${booking.booking_id}) here: ${invoice_download_url} — valid for 12 hours.`;
     const encodedMsg = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/+91${data.customer_phone_number}?text=${encodedMsg}`;
     window.open(whatsappUrl, "_blank");
@@ -125,9 +126,9 @@ function Invoice() {
           <tbody>
             {data.items.map((item, i) => (
               <tr key={i}>
+                <td>{item.date}</td>
                 <td>{item.item_type}</td>
                 <td>{item.item_category}</td>
-                <td>{item.date}</td>
                 <td className="text-end">{item.rate}</td>
               </tr>
             ))}
@@ -213,12 +214,12 @@ function Invoice() {
 
       {/* Print Button */}
       <div className="d-flex justify-content-center mb-4">
-        <Link
+        <button
           className="btn btn-outline-primary mt-3 mx-3"
-          to={`/bookings/${data.booking_id}`}
+          onClick={() => navigate(-1)}
         >
           <i className="fa-solid fa-arrow-left"></i> Back
-        </Link>
+        </button>
         <button
           onClick={handleGenerateAndUpload}
           className="btn btn-outline-info mt-3"

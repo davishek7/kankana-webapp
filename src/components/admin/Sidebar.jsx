@@ -45,6 +45,17 @@ function Sidebar() {
             </Link>
             <Link
               className={`nav-link ${
+                location.pathname === "/expenses" ? "active" : ""
+              }`}
+              to="/expenses"
+            >
+              <div className="sb-nav-link-icon">
+                <i className="fa-solid fa-dollar-sign"></i>
+              </div>
+              Expenses
+            </Link>
+            <Link
+              className={`nav-link ${
                 location.pathname === "/contacts" ? "active" : ""
               }`}
               to="/contacts"

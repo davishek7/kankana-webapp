@@ -54,9 +54,9 @@ export default function ImageDetails() {
         <div className="card-body text-center">
           <h5 className="card-title mb-3 text-capitalize">{category}</h5>
           <div className="d-flex justify-content-center gap-2">
-            <Link className="btn btn-outline-info" to="/gallery">
+            <button className="btn btn-outline-info" onClick={() => navigate(-1)}>
                 <i className="fa-solid fa-arrow-left"></i> Back
-            </Link>
+            </button>
             <button
               className="btn btn-primary"
               onClick={() => setShowEditModal(true)}

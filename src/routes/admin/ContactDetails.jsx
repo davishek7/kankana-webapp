@@ -45,9 +45,9 @@ return (
 
           {/* Action Buttons */}
           <div className="d-flex justify-content-end gap-2">
-            <Link to="/contacts" className="btn btn-outline-primary btn-sm">
+            <button onClick={() => navigate(-1)} className="btn btn-outline-primary btn-sm">
               <i className="fa-solid fa-arrow-left"></i> Back
-            </Link>
+            </button>
             <button className="btn btn-danger btn-sm" onClick={handleDelete}>
               <i className="fa-solid fa-trash me-2"></i> Delete
             </button>

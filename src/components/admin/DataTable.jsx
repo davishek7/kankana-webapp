@@ -45,10 +45,15 @@ function DataTable({
                         alt="preview"
                         className="img-fluid"
                       />
-                    ) : col.accessorKey === "invoice_url" ? (
-                      <a href={row[col.accessorKey]} target="_blank" rel="noopener noreferrer" className="btn btn btn-danger btn-sm">
+                    ) : col.accessorKey === "invoice_file" ? (
+                      <Link
+                        to={`/invoice/${row.booking_id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn btn-danger btn-sm"
+                      >
                         <i className="fa-solid fa-file-pdf"></i>
-                      </a>
+                      </Link>
                     ) : (
                       row[col.accessorKey]
                     )}
@@ -59,7 +64,7 @@ function DataTable({
                     <div className="btn-group">
                       {actions.map((action, idx) => (
                         <Link
-                          to={`${row.booking_id ?? row.id}`}
+                          to={`${location.pathname === "/bookings" ? row.booking_id : row.id}`}
                           key={idx}
                           className={`btn btn-sm ${action.className}`}
                         >

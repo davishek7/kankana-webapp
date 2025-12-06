@@ -13,30 +13,37 @@ export default function Dashboard() {
         <DashboardCard title="Total Images" count={data?.total_images} bgClass="text-bg-warning" />
 
         {/* Contacts Received */}
-        <DashboardCard title="Contacts Received" count={data?.total_contacts} bgClass="text-bg-light"/>
+        {/* <DashboardCard title="Contacts Received" count={data?.total_contacts} bgClass="text-bg-light"/> */}
 
         {/* Total Bookings */}
-        <DashboardCard title="Total Bookings" count={data?.total_bookings} bgClass="text-bg-dark"/>
+        <DashboardCard title="Total Bookings" count={data?.total_bookings} bgClass="text-bg-light"/>
 
         {/* Total Revenue */}
         <DashboardCard
-          title="Total Revenue (Received + Due)"
-          amount={`₹${data?.total_revenue}`}
+          title="Total Revenue"
+          amount={`₹ ${data?.total_revenue}`}
           bgClass="text-bg-success"
         />
 
         {/* Total Received */}
         <DashboardCard
           title="Total Received"
-          amount={`₹${data?.total_received}`}
+          amount={`₹ ${data?.total_received}`}
           bgClass="text-bg-info"
         />
 
         {/* Total Due */}
         <DashboardCard
           title="Total Due"
-          amount={`₹${data?.total_due}`}
+          amount={`₹ ${data?.total_due}`}
           bgClass="text-bg-danger"
+        />
+
+        {/* Total Expense */}
+        <DashboardCard
+          title="Total Expenses"
+          amount={`₹ ${data?.total_expenses}`}
+          bgClass="text-bg-dark"
         />
       </div>
     </div>

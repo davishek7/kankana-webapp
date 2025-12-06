@@ -1,11 +1,7 @@
 import { apiFetch } from "../utils/api";
 
 export async function imagesLoader(){
-    const headers = {
-        "Content-Type": "applicatioin/json",
-    }
-
-    const response = await apiFetch("gallery/?limit=15", { headers })
+    const response = await apiFetch("gallery/?limit=15")
     const responseData = await response.json()
     const data = await responseData.data
     const initialRows = data.images

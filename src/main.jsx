@@ -29,6 +29,14 @@ import ImageDetails from "./routes/admin/ImageDetails.jsx";
 import { imageDetailsLoader } from "./loaders/imageDetails.loader.js";
 import ContactDetails from "./routes/admin/ContactDetails.jsx";
 import { contactDetailsLoader } from "./loaders/contactDetails.loader.js";
+import Expenses from "./routes/admin/Expenses.jsx";
+import { expensesLoader } from "./loaders/expenses.loader.js";
+import NewExpense from "./routes/admin/NewExpense.jsx";
+import { bookingIdLoader } from "./loaders/bookingId.loader.js";
+import { newExpenseAction } from "./actions/newExpense.action.js";
+import ExpenseDetails from "./routes/admin/ExpenseDetails.jsx";
+import { expenseDetailsLoader } from "./loaders/expenseDetails.loader.js";
+import { updateExpenseAction } from "./actions/updateExpense.action.js";
 
 const router = createBrowserRouter([
   {
@@ -84,6 +92,23 @@ const router = createBrowserRouter([
         element: <ContactDetails />,
         loader: contactDetailsLoader,
       },
+      {
+        path: "expenses",
+        element: <Expenses />,
+        loader: expensesLoader
+      },
+      {
+        path: "expenses/new",
+        element: <NewExpense />,
+        loader: bookingIdLoader,
+        action: newExpenseAction
+      },
+      {
+        path: "expenses/:id",
+        element: <ExpenseDetails />,
+        loader: expenseDetailsLoader,
+        action: updateExpenseAction
+      }
     ],
   },
   {
