@@ -1,14 +1,22 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import iconImg from "../../assets/kankana.png";
 
+
 function Navbar({ onToggleSidebar }) {
+  const [query, setQuery] = useState("")
   const { logout } = useAuth();
   const navigate = useNavigate();
   const handleLogout = () => {
     logout();
     navigate("/auth/login");
   };
+
+  const handleSearch = async (e) => {
+    e.preventDefault()
+    navigate(`/search?q=${encodeURIComponent(query)}`)
+  }
 
   return (
     <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -25,7 +33,7 @@ function Navbar({ onToggleSidebar }) {
       >
         <i className="fas fa-bars"></i>
       </button>
-      <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+      <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" onSubmit={handleSearch}>
         <div className="input-group">
           <input
             className="form-control"
@@ -33,11 +41,13 @@ function Navbar({ onToggleSidebar }) {
             placeholder="Search for..."
             aria-label="Search for..."
             aria-describedby="btnNavbarSearch"
+            value={query}
+            onChange = {(e) => setQuery(e.target.value)}
           />
           <button
             className="btn btn-primary"
             id="btnNavbarSearch"
-            type="button"
+            type="submit"
           >
             <i className="fas fa-search"></i>
           </button>

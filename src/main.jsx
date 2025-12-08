@@ -37,6 +37,8 @@ import { newExpenseAction } from "./actions/newExpense.action.js";
 import ExpenseDetails from "./routes/admin/ExpenseDetails.jsx";
 import { expenseDetailsLoader } from "./loaders/expenseDetails.loader.js";
 import { updateExpenseAction } from "./actions/updateExpense.action.js";
+import SearchPage from "./routes/admin/SearchPage.jsx";
+import { searchLoader } from "./loaders/search.loader.js";
 
 const router = createBrowserRouter([
   {
@@ -108,6 +110,11 @@ const router = createBrowserRouter([
         element: <ExpenseDetails />,
         loader: expenseDetailsLoader,
         action: updateExpenseAction
+      },
+      {
+        path: "search",
+        element: <SearchPage />,
+        loader: searchLoader
       }
     ],
   },

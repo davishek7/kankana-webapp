@@ -4,18 +4,20 @@ import { useLoaderData, Link, useNavigate } from "react-router-dom";
 import html2pdf from "html2pdf.js";
 import { apiFetch } from "../../utils/api";
 import { toast } from "react-toastify";
-import { API_URL } from "../../constants/api.constants";
 
 function Invoice() {
-  const {booking} = useLoaderData();
-  const navigate = useNavigate()
+  const { booking } = useLoaderData();
+  const navigate = useNavigate();
   const invoiceRef = useRef();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(booking);
 
+  let customerNameInCapital = data.customer_name
+    .toUpperCase()
+    .replace(/ /g, "-");
+  const invoiceFileName = `${customerNameInCapital}-${data.booking_id}`;
+
   const handleGenerateAndUpload = async () => {
-    let customerNameInCapital = data.customer_name.toUpperCase().replace(/ /g, '-')
-    const invoiceFileName = `${customerNameInCapital}-${data.booking_id}`
     try {
       const element = invoiceRef.current;
       const opt = {
@@ -57,8 +59,8 @@ function Invoice() {
   };
 
   const handleWhatsAppShare = async () => {
-    const invoice_download_url = `${booking.invoice_url}`
-    const message = `Thank you for your booking. Download your invoice (ID: ${booking.booking_id}) here: ${invoice_download_url} — valid for 12 hours.`;
+    const invoice_download_url = `${window.location.origin}/api/download?key=${invoiceFileName}`;
+    const message = `Thank you for your booking. Download your invoice (ID: ${booking.booking_id}) here: ${invoice_download_url}`;
     const encodedMsg = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/+91${data.customer_phone_number}?text=${encodedMsg}`;
     window.open(whatsappUrl, "_blank");
@@ -230,7 +232,7 @@ function Invoice() {
         <button
           onClick={handleWhatsAppShare}
           className="btn btn-outline-success mt-3 mx-3"
-          disabled={!data.invoice_url}
+          disabled={!data.invoice_file}
         >
           <i className="fa-brands fa-whatsapp"></i>{" "}
           {loading ? "Sending Invoice..." : "Send via WhatsApp"}
