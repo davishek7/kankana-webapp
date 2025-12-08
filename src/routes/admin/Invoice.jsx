@@ -23,8 +23,8 @@ function Invoice() {
       const opt = {
         margin: 3,
         filename: `${invoiceFileName}.pdf`,
-        image: { type: "jpeg", quality: 0.7 },
-        html2canvas: { scale: 2 },
+        image: { type: "png", quality: 0.8 },
+        html2canvas: { scale: 2, useCORS: true },
         jsPDF: {
           unit: "mm",
           format: "a4",
@@ -60,7 +60,7 @@ function Invoice() {
 
   const handleWhatsAppShare = async () => {
     const invoice_download_url = `${window.location.origin}/api/download?key=${data.invoice_file}`;
-    const message = `Thank you for your booking. Download your invoice (ID: ${booking.booking_id}) here: ${invoice_download_url}`;
+    const message = `Thank you for your booking. Download your invoice (ID: ${data.booking_id}) here: ${invoice_download_url}`;
     const encodedMsg = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/+91${data.customer_phone_number}?text=${encodedMsg}`;
     window.open(whatsappUrl, "_blank");
