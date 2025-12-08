@@ -59,7 +59,7 @@ function Invoice() {
   };
 
   const handleWhatsAppShare = async () => {
-    const invoice_download_url = `${window.location.origin}/api/download?key=${invoiceFileName}`;
+    const invoice_download_url = `${window.location.origin}/api/download?key=${data.invoice_file}`;
     const message = `Thank you for your booking. Download your invoice (ID: ${booking.booking_id}) here: ${invoice_download_url}`;
     const encodedMsg = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/+91${data.customer_phone_number}?text=${encodedMsg}`;
