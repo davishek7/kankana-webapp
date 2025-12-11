@@ -33,7 +33,7 @@ function Navbar({ onToggleSidebar }) {
       >
         <i className="fas fa-bars"></i>
       </button>
-      <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" onSubmit={handleSearch}>
+      <form className="d-block d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" onSubmit={handleSearch}>
         <div className="input-group">
           <input
             className="form-control"
