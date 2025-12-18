@@ -28,7 +28,7 @@ function SearchResult({ searchData, searchResultType, searchText }) {
                 className="text-decoration-none"
               >
                 <i className="bi bi-journal-bookmark-fill me-2 text-warning" />
-                Booking ID: <strong>{data.booking_id}</strong>
+                Booking ID: <strong>{data.booking_id} - {data.customer_name}</strong>
               </Link>
             )}
 

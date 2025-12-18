@@ -88,7 +88,7 @@ function DataTable({
           )}
         </tbody>
       </table>
-      {showPagination && (
+      {showPagination && data.length>0 && (
         <div
           className="mb"
           style={{
