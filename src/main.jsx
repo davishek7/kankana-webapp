@@ -39,6 +39,9 @@ import { expenseDetailsLoader } from "./loaders/expenseDetails.loader.js";
 import { updateExpenseAction } from "./actions/updateExpense.action.js";
 import SearchPage from "./routes/admin/SearchPage.jsx";
 import { searchLoader } from "./loaders/search.loader.js";
+import Invoices from "./routes/admin/Invoices.jsx";
+import { invoicesLoader } from "./loaders/invoices.loader.js";
+import { invoiceLoader } from "./loaders/invoice.loader.js";
 
 const router = createBrowserRouter([
   {
@@ -97,25 +100,35 @@ const router = createBrowserRouter([
       {
         path: "expenses",
         element: <Expenses />,
-        loader: expensesLoader
+        loader: expensesLoader,
       },
       {
         path: "expenses/new",
         element: <NewExpense />,
         loader: bookingIdLoader,
-        action: newExpenseAction
+        action: newExpenseAction,
       },
       {
         path: "expenses/:id",
         element: <ExpenseDetails />,
         loader: expenseDetailsLoader,
-        action: updateExpenseAction
+        action: updateExpenseAction,
       },
       {
         path: "search",
         element: <SearchPage />,
-        loader: searchLoader
-      }
+        loader: searchLoader,
+      },
+      {
+        path: "invoices",
+        element: <Invoices />,
+        loader: invoicesLoader,
+      },
+      {
+        path: "invoices/:booking_id",
+        element: <Invoice />,
+        loader: invoiceLoader,
+      },
     ],
   },
   {
@@ -133,11 +146,6 @@ const router = createBrowserRouter([
       //   action: registerAction,
       // },
     ],
-  },
-  {
-    path: "invoice/:booking_id",
-    element: <Invoice />,
-    loader: bookingLoader,
   },
 ]);
 

@@ -76,12 +76,12 @@ export default function BookingDetails() {
     <div className="container my-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h2>Booking Details</h2>
-        <Link
-          className="btn btn-outline-dark"
-          to={`/invoice/${booking.booking_id}`}
+        <button
+          className="btn btn-outline-primary mt-3 mx-3"
+          onClick={() => navigate(-1)}
         >
-          <i className="fa-solid fa-file-pdf"></i> Generate Invoice
-        </Link>
+          <i className="fa-solid fa-arrow-left"></i> Back
+        </button>
       </div>
 
       <div className="card mb-4">

@@ -46,14 +46,23 @@ function DataTable({
                         className="img-fluid"
                       />
                     ) : col.accessorKey === "invoice_file" ? (
-                      <Link
-                        to={`/invoice/${row.booking_id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn btn-danger btn-sm"
-                      >
-                        <i className="fa-solid fa-file-pdf"></i>
-                      </Link>
+                      row[col.accessorKey] ? (
+                        <button
+                          class="btn btn-success btn-sm d-inline-flex align-items-center"
+                          disabled
+                        >
+                          <i class="fa-solid fa-check me-2"></i>
+                          Uploaded
+                        </button>
+                      ) : (
+                        <button
+                          class="btn btn-danger btn-sm d-inline-flex align-items-center"
+                          disabled
+                        >
+                          <i class="fa-solid fa-xmark me-2"></i>
+                          Missing
+                        </button>
+                      )
                     ) : (
                       row[col.accessorKey]
                     )}
@@ -64,7 +73,12 @@ function DataTable({
                     <div className="btn-group">
                       {actions.map((action, idx) => (
                         <Link
-                          to={`${location.pathname === "/bookings" ? row.booking_id : row.id}`}
+                          to={`${
+                            location.pathname === "/bookings" ||
+                            location.pathname === "/invoices"
+                              ? row.booking_id
+                              : row.id
+                          }`}
                           key={idx}
                           className={`btn btn-sm ${action.className}`}
                         >
@@ -88,7 +102,7 @@ function DataTable({
           )}
         </tbody>
       </table>
-      {showPagination && data.length>0 && (
+      {showPagination && data.length > 0 && (
         <div
           className="mb"
           style={{

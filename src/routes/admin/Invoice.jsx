@@ -6,7 +6,7 @@ import { apiFetch } from "../../utils/api";
 import { toast } from "react-toastify";
 
 function Invoice() {
-  const { booking } = useLoaderData();
+  const booking = useLoaderData();
   const navigate = useNavigate();
   const invoiceRef = useRef();
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,7 @@ function Invoice() {
       formData.append("file", pdfBlob, `${invoiceFileName}.pdf`);
       formData.append("booking_id", data.booking_id);
 
-      const res = await apiFetch("booking/upload-invoice", {
+      const res = await apiFetch("invoice/upload-invoice", {
         method: "POST",
         body: formData,
       });
@@ -52,7 +52,7 @@ function Invoice() {
       toast.success("Invoice uploaded successfully.");
       setData(resData.data);
     } catch (err) {
-      toast.error("Failed to send invoice.");
+      toast.error("Failed to upload invoice.");
     } finally {
       setLoading(false);
     }

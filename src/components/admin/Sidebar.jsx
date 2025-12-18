@@ -45,6 +45,17 @@ function Sidebar() {
             </Link>
             <Link
               className={`nav-link ${
+                location.pathname === "/invoices" ? "active" : ""
+              }`}
+              to="/invoices"
+            >
+              <div className="sb-nav-link-icon">
+                <i className="fa-solid fa-file-pdf"></i>
+              </div>
+              Invoices
+            </Link>
+            <Link
+              className={`nav-link ${
                 location.pathname === "/expenses" ? "active" : ""
               }`}
               to="/expenses"

@@ -3,10 +3,6 @@ export const BOOKING_COLUMNS = [
   { header: "Customer Name", accessorKey: "customer_name" },
   { header: "Event Date", accessorKey: "earliest_booking_item" },
   { header: "Payment Status", accessorKey: "payment_status" },
-  {
-    header: "Invoice",
-    accessorKey: "invoice_file",
-  },
 ];
 
 export const BOOKING_ACTIONS = [
