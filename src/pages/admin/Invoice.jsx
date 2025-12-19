@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { API_URL } from "../../constants/api.constants";
 import iconImg from "../../assets/kankana.png";
 import { useLoaderData, Link, useNavigate } from "react-router-dom";
 import html2pdf from "html2pdf.js";
@@ -64,6 +65,25 @@ function Invoice() {
     const encodedMsg = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/+91${data.customer_phone_number}?text=${encodedMsg}`;
     window.open(whatsappUrl, "_blank");
+  };
+
+  const handleDownload = async () => {
+    const headers = {};
+    const response = await apiFetch(
+      `invoice/download-invoice/${data.booking_id}`,
+      { headers }
+    );
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${invoiceFileName}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+
+    a.remove();
+    window.URL.revokeObjectURL(url);
   };
 
   return (
@@ -221,6 +241,13 @@ function Invoice() {
           onClick={() => navigate(-1)}
         >
           <i className="fa-solid fa-arrow-left"></i> Back
+        </button>
+        <button
+          onClick={handleDownload}
+          className="btn btn-outline-primary mt-3 mx-3"
+          disabled={!data.invoice_file}
+        >
+          <i className="fa-solid fa-download"></i> Download Invoice
         </button>
         <button
           onClick={handleGenerateAndUpload}
