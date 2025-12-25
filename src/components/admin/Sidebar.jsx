@@ -61,7 +61,7 @@ function Sidebar() {
               to="/expenses"
             >
               <div className="sb-nav-link-icon">
-                <i className="fa-solid fa-dollar-sign"></i>
+                <i className="fa-solid fa-indian-rupee-sign"></i>
               </div>
               Expenses
             </Link>

@@ -48,18 +48,18 @@ function DataTable({
                     ) : col.accessorKey === "invoice_file" ? (
                       row[col.accessorKey] ? (
                         <button
-                          class="btn btn-success btn-sm d-inline-flex align-items-center"
+                          className="btn btn-success btn-sm d-inline-flex align-items-center"
                           disabled
                         >
-                          <i class="fa-solid fa-check me-2"></i>
+                          <i className="fa-solid fa-check me-2"></i>
                           Uploaded
                         </button>
                       ) : (
                         <button
-                          class="btn btn-danger btn-sm d-inline-flex align-items-center"
+                          className="btn btn-danger btn-sm d-inline-flex align-items-center"
                           disabled
                         >
-                          <i class="fa-solid fa-xmark me-2"></i>
+                          <i className="fa-solid fa-xmark me-2"></i>
                           Missing
                         </button>
                       )

@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import { API_URL } from "../../constants/api.constants";
 import iconImg from "../../assets/kankana.png";
 import { useLoaderData, Link, useNavigate } from "react-router-dom";
 import html2pdf from "html2pdf.js";

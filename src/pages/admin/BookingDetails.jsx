@@ -4,7 +4,7 @@ import { apiFetch } from "../../utils/api";
 import { toast } from "react-toastify";
 
 export default function BookingDetails() {
-  const { booking, expenses } = useLoaderData();
+  const booking = useLoaderData();
   const navigate = useNavigate();
   const [newPayment, setNewPayment] = useState({
     amount: "",
@@ -209,7 +209,7 @@ export default function BookingDetails() {
       </div>
 
       {/* Expenses */}
-      {expenses.length > 0 && (
+      {booking.expenses.length > 0 && (
         <>
           <div className="d-flex justify-content-between align-items-center mb-2">
             <h5>Expenses</h5>
@@ -230,7 +230,7 @@ export default function BookingDetails() {
                 </tr>
               </thead>
               <tbody>
-                {expenses?.map((expense, i) => (
+                {booking.expenses?.map((expense, i) => (
                   <tr key={i}>
                     <td>{i + 1}</td>
                     <td>{expense.display_date}</td>
