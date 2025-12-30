@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 export default function NewImage() {
   const [previews, setPreviews] = useState([]);
   const data = useActionData();
+  console.log(data)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,6 +14,17 @@ export default function NewImage() {
       return;
     }
     toast.success(data?.message);
+    toast.warn(
+  <>
+    <strong>Skipped files:</strong>
+    <ul className="mb-0">
+      {data?.skipped_files.map((file) => (
+        <li key={file}>{file}</li>
+      ))}
+    </ul>
+  </>,
+  { autoClose: 8000 }
+);
     navigate("/gallery");
   }, [data, navigate]);
 
