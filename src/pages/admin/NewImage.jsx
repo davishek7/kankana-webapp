@@ -4,29 +4,30 @@ import { toast } from "react-toastify";
 
 export default function NewImage() {
   const [previews, setPreviews] = useState([]);
-  const data = useActionData();
-  console.log(data)
+  const actionData = useActionData();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (data?.status !== 201) {
-      toast.error(data?.message);
+    if (actionData?.status !== 201) {
+      toast.error(actionData?.message);
       return;
     }
-    toast.success(data?.message);
-    toast.warn(
-  <>
-    <strong>Skipped files:</strong>
-    <ul className="mb-0">
-      {data?.skipped_files.map((file) => (
-        <li key={file}>{file}</li>
-      ))}
-    </ul>
-  </>,
-  { autoClose: 8000 }
-);
+    toast.success(actionData?.message);
+    {
+      actionData?.data && toast.warn(
+        <>
+          <strong>Skipped files:</strong>
+          <ul className="mb-0">
+            {actionData?.data?.skipped_files.map((file) => (
+              <li key={file}>{file}</li>
+            ))}
+          </ul>
+        </>,
+        { autoClose: 8000 }
+      );
+    }
     navigate("/gallery");
-  }, [data, navigate]);
+  }, [actionData, navigate]);
 
   const handleImageChange = (e) => {
     const selectedFiles = Array.from(e.target.files);

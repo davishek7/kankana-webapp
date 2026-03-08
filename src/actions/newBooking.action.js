@@ -15,7 +15,7 @@ export async function newBookingAction({ request }) {
     },
     advance: Number(form.get("advance") || 0),
     discount: Number(form.get("discount") || 0),
-    advance_date: form.get("advance_date"),
+    advance_date: form.get("advance_date" || ""),
     created_at: new Date().toISOString(),
   };
 
