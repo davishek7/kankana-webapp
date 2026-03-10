@@ -1,11 +1,16 @@
-import React, { useState } from "react";
-import { useLoaderData, Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useLoaderData, Link, useRevalidator } from "react-router-dom";
 import { apiFetch } from "../../utils/api";
 import { toast } from "react-toastify";
+import AddItemModal from "../../components/admin/AddItemModal";
+import AddPaymentModal from "../../components/admin/AddPaymentModal"; 
+import CustomerEditModal from "../../components/admin/CustomerEditModal";
+
 
 export default function BookingDetails() {
   const booking = useLoaderData();
-  const navigate = useNavigate();
+  const revalidator = useRevalidator();
+
   const [newPayment, setNewPayment] = useState({
     amount: "",
     method: "UPI",
@@ -20,12 +25,22 @@ export default function BookingDetails() {
     date: "",
   });
 
+  const [customer, setCustomer] = useState({
+    name: booking.customer_name,
+    address: booking.customer_address,
+    phone_number: booking.customer_phone_number,
+  });
+
   const handlePaymentChange = (e) => {
     setNewPayment({ ...newPayment, [e.target.name]: e.target.value });
   };
 
   const handleItemChange = (e) => {
     setNewItem({ ...newItem, [e.target.name]: e.target.value });
+  };
+
+  const handleCustomerChange = (e) => {
+    setCustomer({ ...customer, [e.target.name]: e.target.value });
   };
 
   const handleAddPayment = async () => {
@@ -40,14 +55,8 @@ export default function BookingDetails() {
       return;
     }
     toast.success(resData.message);
-    navigate(`/bookings/${booking.booking_id}`);
+    revalidator.revalidate();
     document.getElementById("closePaymentModal").click();
-    setNewPayment({
-      amount: "",
-      method: "Cash",
-      payment_type: "Advance",
-      date: "",
-    });
   };
 
   const handleAddItem = async () => {
@@ -62,31 +71,52 @@ export default function BookingDetails() {
       return;
     }
     toast.success(resData.message);
-    navigate(`/bookings/${booking.booking_id}`);
+    revalidator.revalidate();
     document.getElementById("closeItemModal").click();
-    setNewItem({
-      item_type: "HD",
-      item_category: "Bridal",
-      rate: "",
-      date: "",
-    });
   };
+
+  const handleEditCustomer = async () => {
+    const res = await apiFetch(`booking/${booking.booking_id}/customer`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(customer),
+    });
+    const resData = await res.json();
+    if (resData.status !== 200) {
+      toast.error(resData.message);
+      return;
+    }
+    toast.success(resData.message);
+    revalidator.revalidate();
+    document.getElementById("closeCustomerModal").click();
+  }
 
   return (
     <div className="container my-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h2>Booking Details</h2>
-        <button
+        <Link
           className="btn btn-outline-primary mt-3 mx-3"
-          onClick={() => navigate(-1)}
+          to="/bookings"
         >
           <i className="fa-solid fa-arrow-left"></i> Back
-        </button>
+        </Link>
       </div>
 
       <div className="card mb-4">
         <div className="card-body">
-          <h5 className="card-title">Booking #{booking.booking_id}</h5>
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <h5 className="card-title mb-0">Booking #{booking.booking_id}</h5>
+
+        <button
+          className="btn btn-sm btn-outline-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#customerModal"
+        >
+          <i className="fa-solid fa-pen-to-square"></i>
+        </button>
+          </div>
+
           <p>
             <strong>Booked On:</strong> {booking.created_at}
           </p>
@@ -144,6 +174,7 @@ export default function BookingDetails() {
               <th>Type</th>
               <th>Category</th>
               <th>Rate</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -155,6 +186,11 @@ export default function BookingDetails() {
                   <td>{item.item_type}</td>
                   <td>{item.item_category}</td>
                   <td>₹{item.rate}</td>
+                  <td>
+                    <button className="btn btn-sm btn-outline-primary">
+                      <i className="fa-solid fa-pen-to-square"></i>
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (
@@ -184,6 +220,7 @@ export default function BookingDetails() {
               <th>Amount</th>
               <th>Method</th>
               <th>Type</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -195,6 +232,11 @@ export default function BookingDetails() {
                   <td>₹{pay.amount}</td>
                   <td>{pay.method}</td>
                   <td>{pay.payment_type}</td>
+                  <td>
+                    <button className="btn btn-sm btn-outline-primary">
+                      <i className="fa-solid fa-pen-to-square"></i>
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (
@@ -260,8 +302,8 @@ export default function BookingDetails() {
             booking.payment_status === "Fully Paid"
               ? "bg-success"
               : booking.payment_status === "Partially Paid"
-              ? "bg-warning text-dark"
-              : "bg-danger"
+                ? "bg-warning text-dark"
+                : "bg-danger"
           }`}
         >
           {booking.payment_status}
@@ -269,154 +311,13 @@ export default function BookingDetails() {
       </div>
 
       {/* Payment Modal */}
-      <div className="modal fade" id="paymentModal" tabIndex="-1">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Add Payment</h5>
-              <button
-                id="closePaymentModal"
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <form>
-                <div className="mb-2">
-                  <label className="form-label">Amount</label>
-                  <input
-                    type="number"
-                    name="amount"
-                    className="form-control"
-                    value={newPayment.amount}
-                    onChange={handlePaymentChange}
-                  />
-                </div>
-                <div className="mb-2">
-                  <label className="form-label">Method</label>
-                  <select
-                    name="method"
-                    className="form-select"
-                    value={newPayment.method}
-                    onChange={handlePaymentChange}
-                  >
-                    <option>Cash</option>
-                    <option>UPI</option>
-                    <option>Card</option>
-                  </select>
-                </div>
-                <div className="mb-2">
-                  <label className="form-label">Payment Type</label>
-                  <select
-                    name="payment_type"
-                    className="form-select"
-                    value={newPayment.payment_type}
-                    onChange={handlePaymentChange}
-                  >
-                    <option>Advance</option>
-                    <option>Installment</option>
-                    <option>Final</option>
-                  </select>
-                </div>
-                <div className="mb-2">
-                  <label className="form-label">Date</label>
-                  <input
-                    type="date"
-                    name="date"
-                    className="form-control"
-                    value={newPayment.date}
-                    onChange={handlePaymentChange}
-                  />
-                </div>
-              </form>
-            </div>
-            <div className="modal-footer">
-              <button className="btn btn-secondary" data-bs-dismiss="modal">
-                Cancel
-              </button>
-              <button className="btn btn-success" onClick={handleAddPayment}>
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <AddPaymentModal onChange={handlePaymentChange} onSubmit={handleAddPayment} newPayment={newPayment} />
 
       {/* Item Modal */}
-      <div className="modal fade" id="itemModal" tabIndex="-1">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Add Service Item</h5>
-              <button
-                id="closeItemModal"
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <form>
-                <div className="mb-2">
-                  <label className="form-label">Item Type</label>
-                  <select
-                    name="item_type"
-                    className="form-select"
-                    value={newItem.item_type}
-                    onChange={handleItemChange}
-                  >
-                    <option>HD</option>
-                    <option>NON-HD</option>
-                  </select>
-                </div>
-                <div className="mb-2">
-                  <label className="form-label">Category</label>
-                  <select
-                    name="item_category"
-                    className="form-select"
-                    value={newItem.item_category}
-                    onChange={handleItemChange}
-                  >
-                    <option>Bridal</option>
-                    <option>Reception</option>
-                    <option>Haldi</option>
-                    <option>Party</option>
-                  </select>
-                </div>
-                <div className="mb-2">
-                  <label className="form-label">Rate</label>
-                  <input
-                    type="number"
-                    name="rate"
-                    className="form-control"
-                    value={newItem.rate}
-                    onChange={handleItemChange}
-                  />
-                </div>
-                <div className="mb-2">
-                  <label className="form-label">Date</label>
-                  <input
-                    type="date"
-                    name="date"
-                    className="form-control"
-                    value={newItem.date}
-                    onChange={handleItemChange}
-                  />
-                </div>
-              </form>
-            </div>
-            <div className="modal-footer">
-              <button className="btn btn-secondary" data-bs-dismiss="modal">
-                Cancel
-              </button>
-              <button className="btn btn-primary" onClick={handleAddItem}>
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <AddItemModal onChange={handleItemChange} onSubmit={handleAddItem} newItem={newItem} />
+
+      {/* Customer Modal */}
+      <CustomerEditModal onChange={handleCustomerChange} onSubmit={handleEditCustomer} customer={customer} />
     </div>
   );
 }

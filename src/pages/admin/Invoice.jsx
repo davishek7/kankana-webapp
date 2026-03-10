@@ -138,9 +138,9 @@ function Invoice() {
         <table className="table table-bordered table-sm mb-4">
           <thead className="table-light">
             <tr>
+              <th>Date</th>
               <th>Type</th>
               <th>Category</th>
-              <th>Date</th>
               <th className="text-end">Rate (₹)</th>
             </tr>
           </thead>
