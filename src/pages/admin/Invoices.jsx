@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLoaderData, Link } from "react-router-dom";
-import DataTable from "../../components/admin/DataTable";
+import DataTable from "../../components/admin/ui/DataTable";
 import {
   INVOICE_COLUMNS,
   INVOICE_ACTIONS,

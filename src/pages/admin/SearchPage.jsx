@@ -1,6 +1,6 @@
 import React from "react";
 import { useLoaderData } from "react-router-dom";
-import SearchResult from "../../components/admin/SearchResult";
+import SearchResult from "../../components/admin/search/SearchResult";
 
 function SearchPage() {
   const { images, bookings, contacts, expenses, searchTerm } = useLoaderData();

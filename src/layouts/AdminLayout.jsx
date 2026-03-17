@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import Navbar from "../components/admin/Navbar";
-import Sidebar from "../components/admin/Sidebar";
-import Footer from "../components/admin/Footer";
+import Navbar from "../components/admin/layout/Navbar";
+import Sidebar from "../components/admin/layout/Sidebar";
+import Footer from "../components/admin/layout/Footer";
 import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 

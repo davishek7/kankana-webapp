@@ -1,6 +1,6 @@
 import React from "react";
 import { useLoaderData } from "react-router-dom";
-import DashboardCard from "../../components/admin/DashboardCard";
+import DashboardCard from "../../components/admin/ui/DashboardCard";
 import { YEAR_BG_CLASSES } from "../../constants/dashboard.constants";
 
 export default function Dashboard() {

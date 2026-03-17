@@ -2,14 +2,17 @@ import { useState } from "react";
 import { useLoaderData, Link, useRevalidator } from "react-router-dom";
 import { apiFetch } from "../../utils/api";
 import { toast } from "react-toastify";
-import AddItemModal from "../../components/admin/AddItemModal";
-import AddPaymentModal from "../../components/admin/AddPaymentModal"; 
-import CustomerEditModal from "../../components/admin/CustomerEditModal";
+import AddItemModal from "../../components/admin/booking/AddItemModal";
+import AddPaymentModal from "../../components/admin/booking/AddPaymentModal";
+import CustomerEditModal from "../../components/admin/booking/CustomerEditModal";
 
 
 export default function BookingDetails() {
   const booking = useLoaderData();
   const revalidator = useRevalidator();
+
+  const [activeModal, setActiveModal] = useState(null);
+  const closeModal = () => setActiveModal(null);
 
   const [newPayment, setNewPayment] = useState({
     amount: "",
@@ -56,10 +59,11 @@ export default function BookingDetails() {
     }
     toast.success(resData.message);
     revalidator.revalidate();
-    document.getElementById("closePaymentModal").click();
+    closeModal();
   };
 
-  const handleAddItem = async () => {
+  const handleAddItem = async (e) => {
+    e.preventDefault()
     const res = await apiFetch(`booking/${booking.booking_id}/item`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -72,7 +76,7 @@ export default function BookingDetails() {
     }
     toast.success(resData.message);
     revalidator.revalidate();
-    document.getElementById("closeItemModal").click();
+    closeModal();
   };
 
   const handleEditCustomer = async () => {
@@ -88,7 +92,7 @@ export default function BookingDetails() {
     }
     toast.success(resData.message);
     revalidator.revalidate();
-    document.getElementById("closeCustomerModal").click();
+    closeModal();
   }
 
   return (
@@ -110,8 +114,7 @@ export default function BookingDetails() {
 
         <button
           className="btn btn-sm btn-outline-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#customerModal"
+          onClick={() => setActiveModal("edit-customer")}
         >
           <i className="fa-solid fa-pen-to-square"></i>
         </button>
@@ -159,8 +162,7 @@ export default function BookingDetails() {
         <h5>Service Items</h5>
         <button
           className="btn btn-sm btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#itemModal"
+          onClick={() => setActiveModal("add-item")}
         >
           + Add Item
         </button>
@@ -205,8 +207,7 @@ export default function BookingDetails() {
         <h5>Payments</h5>
         <button
           className="btn btn-sm btn-success"
-          data-bs-toggle="modal"
-          data-bs-target="#paymentModal"
+          onClick={() => setActiveModal("add-payment")}
         >
           + Add Payment
         </button>
@@ -311,13 +312,19 @@ export default function BookingDetails() {
       </div>
 
       {/* Payment Modal */}
-      <AddPaymentModal onChange={handlePaymentChange} onSubmit={handleAddPayment} newPayment={newPayment} />
+      {activeModal === "add-payment" && (
+        <AddPaymentModal onChange={handlePaymentChange} onSubmit={handleAddPayment} newPayment={newPayment} />
+      )}
 
       {/* Item Modal */}
-      <AddItemModal onChange={handleItemChange} onSubmit={handleAddItem} newItem={newItem} />
+      {activeModal === "add-item" && (
+        <AddItemModal isOpen onClose={closeModal} onChange={handleItemChange} onSubmit={handleAddItem} newItem={newItem} />
+      )}
 
       {/* Customer Modal */}
-      <CustomerEditModal onChange={handleCustomerChange} onSubmit={handleEditCustomer} customer={customer} />
+      {activeModal === "edit-customer" && (
+        <CustomerEditModal onChange={handleCustomerChange} onSubmit={handleEditCustomer} customer={customer} />
+      )}
     </div>
   );
 }

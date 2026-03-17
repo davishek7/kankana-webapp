@@ -1,6 +1,6 @@
 import React from "react";
 import { useLoaderData, Link } from "react-router-dom";
-import DataTable from "../../components/admin/DataTable";
+import DataTable from "../../components/admin/ui/DataTable";
 import { EXPENSE_COLUMNS, EXPENSE_ACTIONS } from "../../constants/expense.constants";
 
 function Expenses() {
