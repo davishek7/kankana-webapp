@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
-import iconImg from "../../../assets/kankana.png"
-
+import iconImg from "../../../assets/kankana.png";
+import LogoutConfirmationModal from "../modals/LogoutConfirmationModal";
 
 function Navbar({ onToggleSidebar }) {
-  const [query, setQuery] = useState("")
+  const [query, setQuery] = useState("");
+
+  const [activeModal, setActiveModal] = useState(null);
+  const closeModal = () => setActiveModal(null);
+
   const { logout } = useAuth();
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -14,15 +18,19 @@ function Navbar({ onToggleSidebar }) {
   };
 
   const handleSearch = async (e) => {
-    e.preventDefault()
-    navigate(`/search?q=${encodeURIComponent(query)}`)
-  }
+    e.preventDefault();
+    navigate(`/search?q=${encodeURIComponent(query)}`);
+  };
 
   return (
     <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
       <Link className="navbar-brand d-flex align-items-center" to="/">
         <span className="fs-3">
-          <img src={iconImg} alt="logo" style={{width: "48px", height: "48px"}}/>
+          <img
+            src={iconImg}
+            alt="logo"
+            style={{ width: "48px", height: "48px" }}
+          />
         </span>
       </Link>
       <button
@@ -33,7 +41,10 @@ function Navbar({ onToggleSidebar }) {
       >
         <i className="fas fa-bars"></i>
       </button>
-      <form className="d-block d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" onSubmit={handleSearch}>
+      <form
+        className="d-block d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
+        onSubmit={handleSearch}
+      >
         <div className="input-group">
           <input
             className="form-control"
@@ -42,7 +53,7 @@ function Navbar({ onToggleSidebar }) {
             aria-label="Search for..."
             aria-describedby="btnNavbarSearch"
             value={query}
-            onChange = {(e) => setQuery(e.target.value)}
+            onChange={(e) => setQuery(e.target.value)}
           />
           <button
             className="btn btn-primary"
@@ -78,13 +89,23 @@ function Navbar({ onToggleSidebar }) {
               <hr className="dropdown-divider" />
             </li>
             <li>
-              <Link className="dropdown-item" onClick={handleLogout}>
+              <button
+                className="dropdown-item"
+                onClick={() => setActiveModal("logout")}
+              >
                 <i className="fa-solid fa-arrow-right-from-bracket"></i> Logout
-              </Link>
+              </button>
             </li>
           </ul>
         </li>
       </ul>
+      {activeModal === "logout" && (
+        <LogoutConfirmationModal
+          isOpen
+          onSubmit={handleLogout}
+          onClose={closeModal}
+        />
+      )}
     </nav>
   );
 }

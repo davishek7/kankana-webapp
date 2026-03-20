@@ -2,7 +2,7 @@ import { API_URL } from "../constants/api.constants";
 
 export async function apiFetch(url, options = {}) {
   const accessToken = localStorage.getItem("accessToken");
-  const refreshToken = localStorage.getItem("refreshToken")
+  const refreshToken = localStorage.getItem("refreshToken");
 
   let res = await fetch(`${API_URL}/${url}`, {
     ...options,
@@ -12,30 +12,38 @@ export async function apiFetch(url, options = {}) {
     },
   });
 
-  // If unauthorized, refresh tokens
-  if (res.status === 401 || res.status === 403  && refreshToken) {
+  if ((res.status === 401 || res.status === 403) && refreshToken) {
     const refreshRes = await fetch(`${API_URL}/auth/refresh`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${refreshToken}`,
-         "Content-Type": "application/json",
-      }
-    })
-    const refreshResData = await refreshRes.json()
+        "Content-Type": "application/json",
+      },
+    });
 
-    if (refreshResData.status === 200){
-      const data = await refreshResData.data
-      localStorage.setItem("accessToken", data.access_token)
-      localStorage.setItem("refreshToken", data.refresh_token)
+    const refreshResData = await refreshRes.json();
 
-      // retry original request with new access token
-      options.headers.Authorization = `Bearer ${data.access_token}`;
-      res = await fetch(`${API_URL}/${url}`, options);
-    }  else {
-      // refresh failed → force logout
+    if (refreshResData.status === 200) {
+      const data = refreshResData.data;
+
+      localStorage.setItem("accessToken", data.access_token);
+      localStorage.setItem("refreshToken", data.refresh_token);
+
+      const newHeaders = {
+        ...options.headers,
+        Authorization: `Bearer ${data.access_token}`,
+      };
+
+      res = await fetch(`${API_URL}/${url}`, {
+        ...options,
+        headers: newHeaders,
+      });
+
+    } else {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
-      localStorage.removeItem("authUser")
+      localStorage.removeItem("authUser");
+
       window.location.href = "/auth/login";
       throw new Error("Session expired. Please log in again.");
     }

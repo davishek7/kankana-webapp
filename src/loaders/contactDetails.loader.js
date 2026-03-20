@@ -6,12 +6,12 @@ export async function contactDetailsLoader({ params }){
         "Content-Type": "application/json",
     };
 
-    const response = await apiFetch(`contact/${params.contact_id}`, { headers })
+    const response = await apiFetch(`contact/${params.contactId}`)
     const responseData = await response.json()
-    const data = await responseData.data
+    const data = responseData.data
 
     if (!data.read_status){
-        await apiFetch(`contact/${params.contact_id}`, {
+        await apiFetch(`contact/${params.contactId}`, {
             method: "PATCH",
             headers
         })

@@ -1,10 +1,9 @@
 import { apiFetch } from "../utils/api";
 
 export async function bookingLoader({ params }){
-    const headers = {}
-    const response = await apiFetch(`booking/${params.booking_id}`, { headers })
+    const response = await apiFetch(`booking/${params.bookingId}`)
     const responseData = await response.json()
-    const data = await responseData.data
+    const data = responseData.data
 
     return data
 }

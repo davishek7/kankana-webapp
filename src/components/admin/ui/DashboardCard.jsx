@@ -1,5 +1,3 @@
-import React from "react";
-
 function DashboardCard({ title, count, amount, bgClass, subtitle }) {
   return (
     <div className="col-md-4 col-lg-2">

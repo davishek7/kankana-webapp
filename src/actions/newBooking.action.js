@@ -1,13 +1,12 @@
-import { redirect } from "react-router-dom";
 import { apiFetch } from "../utils/api";
-import { toast } from "react-toastify";
 
 export async function newBookingAction({ request }) {
   const form = await request.formData();
 
   const items = JSON.parse(form.get("items") || "[]");
+
   const payload = {
-    items: items.map(({ id, ...rest }) => rest), // strip temporary id
+    items: items.map(({ id, ...rest }) => rest),
     customer: {
       name: form.get("customer_name")?.trim(),
       address: form.get("customer_address")?.trim(),
@@ -19,25 +18,38 @@ export async function newBookingAction({ request }) {
     created_at: new Date().toISOString(),
   };
 
-  if (!payload.customer.name || !/^\d{10}$/.test(payload.customer.phone_number || "")) {
-    return { error: "Please provide a valid name and 10-digit phone number." };
+  if (
+    !payload.customer.name ||
+    !/^\d{10}$/.test(payload.customer.phone_number || "")
+  ) {
+    return {
+      status: 400,
+      message: "Please provide a valid name and 10-digit phone number.",
+    };
   }
+
   if (payload.items.length === 0) {
-    toast.error("Add at least one service item")
-    return
+    return {
+      status: 400,
+      message: "Add at least one service item",
+    };
   }
-    const res = await apiFetch("booking/", {
+
+  try {
+    const response = await apiFetch("booking/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
 
-    const resData = await res.json()
+    const data = await response.json();
 
-    if (resData.status !== 201){
-        toast.error(resData.message)
-        return
-    }
-    toast.success(resData.message)
-    return redirect("/bookings")
+    return data; // already { status, message, data }
+
+  } catch (err) {
+    return {
+      status: 500,
+      message: "Something went wrong while creating booking",
+    };
+  }
 }

@@ -5,11 +5,9 @@ import Bookings from "../pages/admin/Bookings.jsx";
 import Contacts from "../pages/admin/Contacts.jsx";
 import Expenses from "../pages/admin/Expenses.jsx";
 import Invoices from "../pages/admin/Invoices.jsx";
-import NewImage from "../pages/admin/NewImage.jsx";
 import AdminLayout from "../layouts/AdminLayout.jsx";
 import Dashboard from "../pages/admin/Dashboard.jsx";
 import NewBooking from "../pages/admin/NewBooking.jsx";
-import NewExpense from "../pages/admin/NewExpense.jsx";
 import SearchPage from "../pages/admin/SearchPage.jsx";
 import { statsLoader } from "../loaders/stats.loader.js";
 import { imagesLoader } from "../loaders/images.loader.js";
@@ -23,15 +21,11 @@ import { expensesLoader } from "../loaders/expenses.loader.js";
 import { invoicesLoader } from "../loaders/invoices.loader.js";
 import BookingDetails from "../pages/admin/BookingDetails.jsx";
 import ContactDetails from "../pages/admin/ContactDetails.jsx";
-import ExpenseDetails from "../pages/admin/ExpenseDetails.jsx";
-import { bookingIdLoader } from "../loaders/bookingId.loader.js";
 import { newBookingAction } from "../actions/newBooking.action.js";
-import { newExpenseAction } from "../actions/newExpense.action.js";
 import { imageUploadAction } from "../actions/imageUpload.action.js";
 import { imageDetailsLoader } from "../loaders/imageDetails.loader.js";
-import { updateExpenseAction } from "../actions/updateExpense.action.js";
 import { contactDetailsLoader } from "../loaders/contactDetails.loader.js";
-import { expenseDetailsLoader } from "../loaders/expenseDetails.loader.js";
+import { bookingDetailsAction } from "../actions/bookingDetails.action.js";
 
 export default [
   {
@@ -51,14 +45,10 @@ export default [
         path: "gallery",
         element: <Gallery />,
         loader: imagesLoader,
-      },
-      {
-        path: "gallery/upload",
-        element: <NewImage />,
         action: imageUploadAction,
       },
       {
-        path: "gallery/:image_id",
+        path: "gallery/:imageId",
         element: <ImageDetails />,
         loader: imageDetailsLoader,
       },
@@ -73,9 +63,10 @@ export default [
         action: newBookingAction,
       },
       {
-        path: "bookings/:booking_id",
+        path: "bookings/:bookingId",
         element: <BookingDetails />,
         loader: bookingLoader,
+        action: bookingDetailsAction,
       },
       {
         path: "contacts",
@@ -83,7 +74,7 @@ export default [
         loader: contactsLoader,
       },
       {
-        path: "contacts/:contact_id",
+        path: "contacts/:contactId",
         element: <ContactDetails />,
         loader: contactDetailsLoader,
       },
@@ -91,18 +82,6 @@ export default [
         path: "expenses",
         element: <Expenses />,
         loader: expensesLoader,
-      },
-      {
-        path: "expenses/new",
-        element: <NewExpense />,
-        loader: bookingIdLoader,
-        action: newExpenseAction,
-      },
-      {
-        path: "expenses/:id",
-        element: <ExpenseDetails />,
-        loader: expenseDetailsLoader,
-        action: updateExpenseAction,
       },
       {
         path: "search",
@@ -115,7 +94,7 @@ export default [
         loader: invoicesLoader,
       },
       {
-        path: "invoices/:booking_id",
+        path: "invoices/:bookingId",
         element: <Invoice />,
         loader: invoiceLoader,
       },

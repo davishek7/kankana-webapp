@@ -1,26 +1,29 @@
-import React from "react";
+import { useState } from "react";
 import { useLoaderData, Link, useNavigate } from "react-router-dom";
 import MDEditor from "@uiw/react-md-editor";
 import { apiFetch } from "../../utils/api";
 import { toast } from "react-toastify";
+import DeleteConfirmationModal from "../../components/admin/modals/DeleteConfirmationModal";
 
 
 function ContactDetails() {
-  const data = useLoaderData();
+  const contact = useLoaderData();
   const navigate = useNavigate()
 
+  const [activeModal, setActiveModal] = useState(null);
+  const closeModal = () => setActiveModal(null);
+
   const handleDelete = async() =>{
-    const res = await apiFetch(`contact/${data.id}`, {
+    const response = await apiFetch(`contact/${contact.id}`, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
     });
-    const resData = await res.json()
-    if(resData.status === 200){
-      toast.success(resData.message)
-      navigate("/contacts")
-    } else {
-      toast.error(resData.message)
+    const data = await response.json()
+    if (response.status >= 400){
+        toast.error(data.message)
+        return
     }
+    toast.success(data.message)
+    navigate("/contacts")
   }
 
 return (
@@ -30,30 +33,38 @@ return (
           {/* Title + Status Toggle */}
           <div className="d-flex justify-content-between align-items-center mb-3">
             <div>
-              <h2 className="fw-bold mb-1">{data.name}</h2>
-              <h5 className="text-muted">{data.phone_number}</h5>
-              <span className="text-muted mb-4">{data.created_at}</span>
+              <h2 className="fw-bold mb-1">{contact.name}</h2>
+              <h5 className="text-muted">{contact.phone_number}</h5>
+              <span className="text-muted mb-4">{contact.created_at}</span>
             </div>
           </div>
           {/* Contact Message */}
           <div className="mb-4 overflow-auto" style={{ maxHeight: "500px" }}>
             <MDEditor.Markdown
-              source={data.message}
+              source={contact.message}
               className="bg-white text-dark p-3 rounded shadow-sm"
             />
           </div>
 
           {/* Action Buttons */}
           <div className="d-flex justify-content-end gap-2">
-            <button onClick={() => navigate(-1)} className="btn btn-outline-primary btn-sm">
+            <Link to="/contacts" className="btn btn-outline-primary btn-sm">
               <i className="fa-solid fa-arrow-left"></i> Back
-            </button>
-            <button className="btn btn-danger btn-sm" onClick={handleDelete}>
+            </Link>
+            <button className="btn btn-danger btn-sm" onClick={() => setActiveModal("delete")}>
               <i className="fa-solid fa-trash me-2"></i> Delete
             </button>
           </div>
         </div>
       </div>
+      {activeModal === "delete" && (
+        <DeleteConfirmationModal
+          item="contact"
+          isOpen
+          onClose={closeModal}
+          onSubmit={handleDelete}
+        />
+      )}
     </div>
   );
 }

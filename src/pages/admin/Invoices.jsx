@@ -16,37 +16,30 @@ function Invoices() {
 
   const fetchPage = async (newPage) => {
     const offset = (newPage - 1) * limit;
-    const headers = {
-      "Content-Type": "application/json",
-    };
-    const res = await apiFetch(`invoice/?view=invoice&limit=${limit}&offset=${offset}`, {
-      headers,
-    });
+    const res = await apiFetch(
+      `invoice/?view=invoice&limit=${limit}&offset=${offset}`,
+    );
     const responseData = await res.json();
-    const data = await responseData.data;
+    const data = responseData.data;
 
     setInvoices(data.bookings);
     setPage(newPage);
   };
   return (
-    <div>
-      <div className="mt-3">
-        <div className="clearfix">
-          <h2 className="text-xl font-bold mb-3 float-start">
-            Manage Invoices
-          </h2>
-        </div>
-        <DataTable
-          columns={INVOICE_COLUMNS}
-          data={invoices}
-          actions={INVOICE_ACTIONS}
-          page={page}
-          totalPages={totalPages}
-          fetchPage={fetchPage}
-          showPagination={true}
-        />
+    <>
+      <div className="d-flex justify-content-between align-items-center mt-3 mb-3">
+        <h2 className="text-xl font-bold">Manage Invoices</h2>
       </div>
-    </div>
+      <DataTable
+        columns={INVOICE_COLUMNS}
+        data={invoices}
+        actions={INVOICE_ACTIONS}
+        page={page}
+        totalPages={totalPages}
+        fetchPage={fetchPage}
+        showPagination={true}
+      />
+    </>
   );
 }
 

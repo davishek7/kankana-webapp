@@ -8,7 +8,7 @@ export const EXPENSE_COLUMNS = [
 
 export const EXPENSE_ACTIONS = [
   {
-    label: "View",
+    label: "View Booking",
     className: "btn-outline-success",
   }
 ];

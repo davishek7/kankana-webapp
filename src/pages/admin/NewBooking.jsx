@@ -1,24 +1,15 @@
-import React, { useState } from "react";
-import { Form, useNavigation, useActionData } from "react-router-dom";
+import { useState, useEffect } from "react";
+import {
+  Form,
+  useNavigation,
+  useNavigate,
+  useActionData,
+} from "react-router-dom";
+import { toast } from "react-toastify";
 
-/**
- * NewBooking — add a new booking using react-router-dom <Form>
- * - Captures customer (name, address, phone)
- * - Money: advance, discount
- * - Service items: add multiple rows before submit
- * - Sends JSON to API via route action() below
- *
- * JSON Shape:
- * {
- *   items: [{ item_type, item_category, rate, date }],
- *   customer: { name, address, phone_number },
- *   advance,
- *   discount,
- *   created_at
- * }
- */
 export default function NewBooking() {
   const nav = useNavigation();
+  const navigate = useNavigate();
   const actionData = useActionData();
   const [items, setItems] = useState([]);
   const [draft, setDraft] = useState({
@@ -47,15 +38,22 @@ export default function NewBooking() {
 
   const isSubmitting = nav.state === "submitting";
 
+  useEffect(() => {
+    if (!actionData) return;
+
+    if (actionData.status >= 400) {
+      toast.error(actionData.message);
+      return;
+    }
+
+    toast.success(actionData.message);
+
+    navigate("/bookings");
+  }, [actionData]);
+
   return (
     <div className="container my-4">
       <h2 className="mb-3">Add Booking</h2>
-
-      {actionData?.error && (
-        <div className="alert alert-danger" role="alert">
-          {actionData.error}
-        </div>
-      )}
 
       <Form method="post" className="row g-3">
         {/* Customer */}
@@ -113,7 +111,7 @@ export default function NewBooking() {
               setDraft((d) => ({ ...d, item_category: e.target.value }))
             }
           >
-            <option value="Bridal">Bridal</option>                                  
+            <option value="Bridal">Bridal</option>
             <option value="Reception">Reception</option>
             <option value="Haldi">Haldi</option>
             <option value="Party">Party</option>
@@ -214,11 +212,7 @@ export default function NewBooking() {
         </div>
         <div className="col-md-3">
           <label className="form-label">Advance Date</label>
-          <input
-            name="advance_date"
-            type="date"
-            className="form-control"
-          />
+          <input name="advance_date" type="date" className="form-control" />
         </div>
         <div className="col-md-2">
           <label className="form-label">Discount</label>

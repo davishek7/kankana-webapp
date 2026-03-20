@@ -16,37 +16,28 @@ function Contacts() {
 
   const fetchPage = async (newPage) => {
     const offset = (newPage - 1) * limit;
-    const headers = {
-      "Content-Type": "application/json",
-    };
-    const res = await apiFetch(`contact/?limit=${limit}&offset=${offset}`, {
-      headers,
-    });
+    const res = await apiFetch(`contact/?limit=${limit}&offset=${offset}`);
     const responseData = await res.json();
-    const data = await responseData.data;
+    const data = responseData.data;
 
     setContacts(data.contacts);
     setPage(newPage);
   };
   return (
-    <div>
-      <div className="mt-3">
-        <div className="clearfix">
-          <h2 className="text-xl font-bold mb-3 float-start">
-            Manage Contacts
-          </h2>
-        </div>
-        <DataTable
-          columns={CONTACT_COLUMNS}
-          data={contacts}
-          actions={CONTACT_ACTIONS}
-          showPagination={true}
-          page={page}
-          totalPages={totalPages}
-          fetchPage={fetchPage}
-        />
+    <>
+      <div className="d-flex justify-content-between align-items-center mt-3 mb-3">
+        <h2 className="text-xl font-bold">Manage Contacts</h2>
       </div>
-    </div>
+      <DataTable
+        columns={CONTACT_COLUMNS}
+        data={contacts}
+        actions={CONTACT_ACTIONS}
+        showPagination={true}
+        page={page}
+        totalPages={totalPages}
+        fetchPage={fetchPage}
+      />
+    </>
   );
 }
 

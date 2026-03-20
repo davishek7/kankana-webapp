@@ -1,9 +1,32 @@
-import { Link, Form } from "react-router-dom";
+import { Link, Form, useActionData, useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { toast } from "react-toastify";
 
 export default function Register() {
+  const actionData = useActionData();
+  const navigate = useNavigate();
+
+  const hasHandledRef = useRef(false);
+
+  useEffect(() => {
+    if (!actionData || hasHandledRef.current) return;
+
+    hasHandledRef.current = true;
+
+    if (actionData.status >= 400) {
+      toast.error(actionData.message);
+      return;
+    }
+
+    toast.success(actionData.message);
+    navigate("/auth/login");
+  }, [actionData]);
 
   return (
-    <div className="card shadow p-4" style={{ maxWidth: "450px", width: "100%", borderRadius: "1rem" }}>
+    <div
+      className="card shadow p-4"
+      style={{ maxWidth: "450px", width: "100%", borderRadius: "1rem" }}
+    >
       <h3 className="text-center mb-4">Register</h3>
       <Form method="post">
         <div className="form-floating mb-3">
@@ -51,7 +74,9 @@ export default function Register() {
           <label htmlFor="confirmPassword">Confirm Password</label>
         </div>
         <div className="d-grid mb-3">
-          <button type="submit" className="btn btn-success">Register</button>
+          <button type="submit" className="btn btn-success">
+            Register
+          </button>
         </div>
         <p className="text-center mb-0">
           Already have an account? <Link to="/auth/login">Login</Link>

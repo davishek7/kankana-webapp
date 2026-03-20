@@ -1,4 +1,3 @@
-import React from "react";
 import { useLoaderData } from "react-router-dom";
 import SearchResult from "../../components/admin/search/SearchResult";
 

@@ -1,10 +1,9 @@
 import { apiFetch } from "../utils/api";
 
 export async function bookingsLoader(){
-    const headers = {}
-    const response = await apiFetch("booking/?view=default", { headers })
+    const response = await apiFetch("booking/?view=default")
     const responseData = await response.json()
-    const data = await responseData.data
+    const data = responseData.data
     const initialRows = data.bookings
     const total = data.total
     const limit = data.limit
