@@ -70,7 +70,7 @@ function Invoice() {
     const headers = {};
     const response = await apiFetch(
       `invoice/download-invoice/${data.booking_id}`,
-      { headers }
+      { headers },
     );
     const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
@@ -192,8 +192,8 @@ function Invoice() {
                   data.payment_status === "Fully Paid"
                     ? "bg-success"
                     : data.payment_status === "Partially Paid"
-                    ? "bg-warning text-dark"
-                    : "bg-danger"
+                      ? "bg-warning text-dark"
+                      : "bg-danger"
                 }`}
               >
                 {data.payment_status}
@@ -234,30 +234,27 @@ function Invoice() {
       </div>
 
       {/* Print Button */}
-      <div className="d-flex justify-content-center mb-4">
-        <button
-          className="btn btn-outline-primary mt-3 mx-3"
-          onClick={() => navigate(-1)}
-        >
+      <div className="d-flex align-items-between justify-content-center mt-3 mb-4">
+        <Link className="btn btn-outline-primary btn-sm me-3" to="/invoices">
           <i className="fa-solid fa-arrow-left"></i> Back
-        </button>
-        <button
-          onClick={handleDownload}
-          className="btn btn-outline-primary mt-3 mx-3"
-          disabled={!data.invoice_file}
-        >
-          <i className="fa-solid fa-download"></i> Download Invoice
-        </button>
+        </Link>
         <button
           onClick={handleGenerateAndUpload}
-          className="btn btn-outline-info mt-3"
+          className="btn btn-outline-info btn-sm me-3"
         >
           <i className="fa-solid fa-cloud-arrow-up"></i>{" "}
           {loading ? "Uploading..." : "Upload Latest Invoice"}
         </button>
         <button
+          onClick={handleDownload}
+          className="btn btn-dark btn-sm me-3"
+          disabled={!data.invoice_file}
+        >
+          <i className="fa-solid fa-download"></i> Download Invoice
+        </button>
+        <button
           onClick={handleWhatsAppShare}
-          className="btn btn-outline-success mt-3 mx-3"
+          className="btn btn-success btn-sm"
           disabled={!data.invoice_file}
         >
           <i className="fa-brands fa-whatsapp"></i>{" "}

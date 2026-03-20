@@ -1,10 +1,9 @@
 import { apiFetch } from "../utils/api";
 
 export async function invoiceLoader({ params }) {
-  const headers = {};
-  const response = await apiFetch(`invoice/${params.booking_id}`, { headers });
+  const response = await apiFetch(`invoice/${params.bookingId}`);
   const responseData = await response.json();
-  const data = await responseData.data;
+  const data = responseData.data;
 
   return data;
 }

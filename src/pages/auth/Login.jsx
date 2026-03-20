@@ -1,10 +1,5 @@
-import { useEffect } from "react";
-import {
-  Link,
-  Form,
-  useActionData,
-  useNavigate,
-} from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { Link, Form, useActionData, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 
@@ -13,18 +8,27 @@ export default function Login() {
   const { saveAuth } = useAuth();
   const navigate = useNavigate();
 
+  const hasHandledRef = useRef(false);
+
   useEffect(() => {
-    if (actionData?.status !== 200) {
-      toast.error(actionData?.message);
-      return
+    if (!actionData || hasHandledRef.current) return;
+
+    hasHandledRef.current = true;
+
+    if (actionData.status >= 400) {
+      toast.error(actionData.message);
+      return;
     }
+
     saveAuth(
       actionData?.data.user,
       actionData?.data.auth_tokens.access_token,
-      actionData?.data.auth_tokens.refresh_token
+      actionData?.data.auth_tokens.refresh_token,
     );
+
+    toast.success(actionData.message);
     navigate("/", { replace: true });
-  }, [actionData, saveAuth, navigate]);
+  }, [actionData]);
 
   return (
     <div

@@ -1,9 +1,8 @@
 import { apiFetch } from "../utils/api";
 
 export async function expensesLoader(){
-    const headers = {}
-    const response = await apiFetch("expense/", { headers })
+    const response = await apiFetch("expense/")
     const responseData = await response.json()
-    const data = await responseData.data
+    const data = responseData.data
     return data.expenses
 }

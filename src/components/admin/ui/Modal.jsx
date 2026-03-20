@@ -3,18 +3,19 @@ export default function Modal({
   title,
   onClose,
   children,
-  closeOnBackdrop
+  closeOnBackdrop,
+  showMiddle,
 }) {
   if (!isOpen) return null;
 
   return (
     <>
       {/* backdrop */}
-      <div className="modal-backdrop fade show" />
+      <div className="modal-backdrop fade show" style={{zIndex: 1050}}/>
 
       <div
         className="modal fade show"
-        style={{ display: "block" }}
+        style={{ display: "block", zIndex: 1055 }}
         tabIndex={-1}
         onClick={(e) => {
           if (closeOnBackdrop && e.target === e.currentTarget) {
@@ -22,7 +23,7 @@ export default function Modal({
           }
         }}
       >
-        <div className="modal-dialog">
+        <div className={`modal-dialog ${showMiddle && 'modal-dialog-centered'}`}>
           <div className="modal-content">
             <div className="modal-header">
               {title && <h5 className="modal-title">{title}</h5>}

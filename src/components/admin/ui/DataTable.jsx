@@ -9,6 +9,17 @@ function DataTable({
   fetchPage,
   showPagination = false,
 }) {
+  const getLink = ( row ) => {
+  if (location.pathname.startsWith("/expenses")) {
+    return `/bookings/${row.booking_id}`;
+  }
+
+  if (location.pathname === "/bookings" || location.pathname === "/invoices") {
+    return row.booking_id;
+  }
+
+  return row.id;
+};
   return (
     <div className="table-responsive mt-3">
       <table className="table table-striped table-hover border-dark align-middle shadow">
@@ -73,12 +84,7 @@ function DataTable({
                     <div className="btn-group">
                       {actions.map((action, idx) => (
                         <Link
-                          to={`${
-                            location.pathname === "/bookings" ||
-                            location.pathname === "/invoices"
-                              ? row.booking_id
-                              : row.id
-                          }`}
+                          to={getLink(row)}
                           key={idx}
                           className={`btn btn-sm ${action.className}`}
                         >
