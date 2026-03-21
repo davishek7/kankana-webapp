@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import {
   Form,
+  Link,
   useNavigation,
   useNavigate,
   useActionData,
@@ -52,14 +53,21 @@ export default function NewBooking() {
   }, [actionData]);
 
   return (
-    <div className="container my-4">
-      <h2 className="mb-3">Add Booking</h2>
+    <>
+      {/* Header */}
+      <div className="d-flex justify-content-between align-items-center my-3">
+        <h2 className="mb-0">Add Booking</h2>
+        <Link to="/bookings" className="btn btn-outline-secondary btn-sm">
+          <i className="fa-solid fa-arrow-left"></i> Back
+        </Link>
+      </div>
 
       <Form method="post" className="row g-3">
         {/* Customer */}
         <div className="col-12">
-          <h5 className="mb-2">Customer</h5>
+          <h5 className="mb-2">Customer Details</h5>
         </div>
+
         <div className="col-md-4">
           <label className="form-label">Name</label>
           <input
@@ -69,10 +77,12 @@ export default function NewBooking() {
             minLength={2}
           />
         </div>
+
         <div className="col-md-5">
           <label className="form-label">Address</label>
           <input name="customer_address" className="form-control" />
         </div>
+
         <div className="col-md-3">
           <label className="form-label">Phone</label>
           <input
@@ -86,9 +96,14 @@ export default function NewBooking() {
         </div>
 
         {/* Items */}
-        <div className="col-12 mt-4">
-          <h5 className="mb-2">Service Items</h5>
+        <div className="col-12 mt-4 d-flex justify-content-between align-items-center">
+          <h5 className="mb-0">Service Items</h5>
+          <small className="text-muted fst-italic">
+            Add all services before saving booking
+          </small>
         </div>
+
+        {/* Input row */}
         <div className="col-md-3">
           <label className="form-label">Type</label>
           <select
@@ -102,6 +117,7 @@ export default function NewBooking() {
             <option value="NON-HD">Non-HD</option>
           </select>
         </div>
+
         <div className="col-md-3">
           <label className="form-label">Category</label>
           <select
@@ -117,6 +133,7 @@ export default function NewBooking() {
             <option value="Party">Party</option>
           </select>
         </div>
+
         <div className="col-md-2">
           <label className="form-label">Rate (₹)</label>
           <input
@@ -127,7 +144,8 @@ export default function NewBooking() {
             onChange={(e) => setDraft((d) => ({ ...d, rate: e.target.value }))}
           />
         </div>
-        <div className="col-md-3">
+
+        <div className="col-md-2">
           <label className="form-label">Date</label>
           <input
             type="date"
@@ -136,13 +154,14 @@ export default function NewBooking() {
             onChange={(e) => setDraft((d) => ({ ...d, date: e.target.value }))}
           />
         </div>
-        <div className="col-md-1 d-flex align-items-end">
+
+        <div className="col-md-2 d-flex align-items-end">
           <button
-            className="btn btn-primary w-100"
+            className="btn btn-primary w-100 fw-semibold"
             onClick={addItem}
             type="button"
           >
-            Add
+            + Add Item
           </button>
         </div>
 
@@ -163,8 +182,11 @@ export default function NewBooking() {
               <tbody>
                 {items.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="text-center text-muted">
-                      No items added
+                    <td
+                      colSpan={6}
+                      className="text-center text-muted fst-italic py-3"
+                    >
+                      No items added yet
                     </td>
                   </tr>
                 ) : (
@@ -190,19 +212,30 @@ export default function NewBooking() {
               </tbody>
             </table>
           </div>
+
+          {/* Subtotal */}
+          <div className="text-end">
+            <small className="text-muted">
+              Subtotal: ₹
+              {items.reduce((sum, i) => sum + Number(i.rate || 0), 0)}
+            </small>
+          </div>
         </div>
 
-        {/* Money */}
-        <div className="col-12 mt-3">
-          <h5 className="mb-2">Payment</h5>
+        {/* Payment */}
+        <div className="col-12 mt-3 d-flex justify-content-between align-items-center">
+          <h5 className="mb-0">Payment</h5>
+          <small className="text-muted fst-italic">
+            Discount applies on total package
+          </small>
         </div>
+
         <div className="col-md-2">
           <label className="form-label">Advance</label>
           <input
             name="advance"
             type="number"
             min="0"
-            step="1"
             className="form-control"
             value={money.advance}
             onChange={(e) =>
@@ -210,17 +243,18 @@ export default function NewBooking() {
             }
           />
         </div>
+
         <div className="col-md-3">
           <label className="form-label">Advance Date</label>
           <input name="advance_date" type="date" className="form-control" />
         </div>
+
         <div className="col-md-2">
           <label className="form-label">Discount</label>
           <input
             name="discount"
             type="number"
             min="0"
-            step="1"
             className="form-control"
             value={money.discount}
             onChange={(e) =>
@@ -229,7 +263,20 @@ export default function NewBooking() {
           />
         </div>
 
-        {/* Hidden payloads */}
+        {/* Live total */}
+        <div className="col-12 text-end">
+          <div className="text-muted">
+            Subtotal: ₹{items.reduce((s, i) => s + Number(i.rate || 0), 0)}
+          </div>
+          <div className="text-muted">Discount: -₹{money.discount || 0}</div>
+          <div className="fw-semibold">
+            Total: ₹
+            {items.reduce((s, i) => s + Number(i.rate || 0), 0) -
+              Number(money.discount || 0)}
+          </div>
+        </div>
+
+        {/* Hidden */}
         <input
           type="hidden"
           name="items"
@@ -238,17 +285,18 @@ export default function NewBooking() {
         />
 
         {/* Submit */}
-        <div className="col-12 d-flex gap-2">
+        <div className="col-12 d-flex justify-content-end gap-2 mt-3">
           <button
             type="submit"
             className="btn btn-primary"
             disabled={isSubmitting || items.length === 0}
           >
-            {isSubmitting ? "Saving..." : "Save"}
+            {isSubmitting ? "Saving..." : "Save Booking"}
           </button>
+
           <button
             type="reset"
-            className="btn btn-secondary"
+            className="btn btn-outline-secondary"
             onClick={() => {
               setItems([]);
               setDraft({
@@ -264,6 +312,6 @@ export default function NewBooking() {
           </button>
         </div>
       </Form>
-    </div>
+    </>
   );
 }
