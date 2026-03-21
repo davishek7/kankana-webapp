@@ -6,7 +6,7 @@ function BookingAndCustomerInfo({ booking, setActiveModal }) {
           <h5 className="card-title mb-0">Booking #{booking.booking_id}</h5>
 
           <button
-            className="btn btn-sm btn-outline-primary"
+            className="btn btn-sm btn-warning"
             onClick={() => setActiveModal("edit-customer")}
           >
             <i className="fa-solid fa-pen-to-square"></i> Edit

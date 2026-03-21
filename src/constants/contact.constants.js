@@ -7,6 +7,6 @@ export const CONTACT_COLUMNS = [
 export const CONTACT_ACTIONS = [
   {
     label: "View",
-    className: "btn-outline-success",
+    className: "btn-outline-info",
   },
 ];

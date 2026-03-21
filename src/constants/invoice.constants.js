@@ -10,6 +10,6 @@ export const INVOICE_COLUMNS = [
 export const INVOICE_ACTIONS = [
   {
     label: "View",
-    className: "btn-outline-success",
+    className: "btn-outline-info",
   },
 ];

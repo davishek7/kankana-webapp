@@ -41,7 +41,7 @@ function Gallery() {
           </h2>
           <button
             onClick={() => setActiveModal("add-image")}
-            className="btn btn-outline-info btn-sm"
+            className="btn btn-success btn-sm"
           >
             <i className="fa-solid fa-cloud-arrow-up"></i> Upload New Image
           </button>

@@ -28,11 +28,11 @@ function EditImageCategoryModal({
           <option value="gallery">Gallery</option>
         </select>
         <div className="d-flex justify-content-end">
-          <button className="btn btn-secondary me-2" onClick={onClose}>
+          <button className="btn btn-outline-secondary btn-sm me-2" onClick={onClose}>
             Cancel
           </button>
-          <button className="btn btn-success" onClick={() => onSubmit(category)}>
-            Save Changes
+          <button className="btn btn-primary btn-sm" onClick={() => onSubmit(category)}>
+            Save
           </button>
         </div>
       </>

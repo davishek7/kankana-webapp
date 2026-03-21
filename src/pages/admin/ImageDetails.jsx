@@ -61,11 +61,11 @@ export default function ImageDetails() {
           <h5 className="card-title mb-3 text-capitalize">{image.category}</h5>
 
           <div className="d-flex justify-content-center gap-2">
-            <Link to="/gallery" className="btn btn-outline-info btn-sm">
+            <Link to="/gallery" className="btn btn-outline-primary btn-sm">
               <i className="fa-solid fa-arrow-left"></i> Back
             </Link>
             <button
-              className="btn btn-primary btn-sm"
+              className="btn btn-warning btn-sm"
               onClick={() => setActiveModal("edit-image")}
             >
               <i className="fa-solid fa-pen-to-square"></i> Edit
@@ -74,7 +74,7 @@ export default function ImageDetails() {
               className="btn btn-danger btn-sm"
               onClick={() => setActiveModal("delete-image")}
             >
-              <i className="fa-solid fa-trash me"></i> Delete
+              <i className="fa-solid fa-trash"></i> Delete
             </button>
           </div>
         </div>

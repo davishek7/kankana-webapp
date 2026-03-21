@@ -46,7 +46,7 @@ export default function BookingDetails() {
 
         {/* Right: Buttons */}
         <div className="d-flex gap-2">
-          <Link className="btn btn-outline-info btn-sm" to="/bookings">
+          <Link className="btn btn-outline-primary btn-sm" to="/bookings">
             <i className="fa-solid fa-arrow-left me"></i> Back
           </Link>
           {["Unpaid", "Partially Paid"].includes(booking.payment_status) && (
@@ -54,7 +54,7 @@ export default function BookingDetails() {
               className="btn btn-danger btn-sm"
               onClick={() => setActiveModal("delete")}
             >
-              <i className="fa-solid fa-trash me"></i> Delete Booking
+              <i className="fa-solid fa-trash"></i> Delete
             </button>
           )}
         </div>
@@ -86,7 +86,7 @@ export default function BookingDetails() {
       <div className="d-flex justify-content-between align-items-center mb-2">
         <h5>Payments</h5>
         <button
-          className="btn btn-sm btn-success"
+          className="btn btn-sm btn-primary"
           onClick={() => setActiveModal("add-payment")}
         >
           + Add Payment
@@ -100,7 +100,7 @@ export default function BookingDetails() {
         <div className="d-flex justify-content-between align-items-center mb-2">
           <h5>Expenses</h5>
           <button
-            className="btn btn-sm btn-danger"
+            className="btn btn-sm btn-primary"
             onClick={() => setActiveModal("add-expense")}
           >
             + Add Expense

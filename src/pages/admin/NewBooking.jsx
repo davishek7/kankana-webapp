@@ -241,10 +241,10 @@ export default function NewBooking() {
         <div className="col-12 d-flex gap-2">
           <button
             type="submit"
-            className="btn btn-success"
+            className="btn btn-primary"
             disabled={isSubmitting || items.length === 0}
           >
-            {isSubmitting ? "Saving..." : "Save Booking"}
+            {isSubmitting ? "Saving..." : "Save"}
           </button>
           <button
             type="reset"

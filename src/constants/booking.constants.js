@@ -8,6 +8,6 @@ export const BOOKING_COLUMNS = [
 export const BOOKING_ACTIONS = [
   {
     label: "View",
-    className: "btn-outline-success",
+    className: "btn-outline-info",
   },
 ];

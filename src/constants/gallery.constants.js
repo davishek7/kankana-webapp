@@ -7,6 +7,6 @@ export const GALLERY_COLUMNS = [
 export const GALLERY_ACTIONS = [
   {
     label: "View",
-    className: "btn-outline-success",
+    className: "btn-outline-info",
   },
 ];

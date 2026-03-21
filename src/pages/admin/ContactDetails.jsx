@@ -52,7 +52,7 @@ return (
               <i className="fa-solid fa-arrow-left"></i> Back
             </Link>
             <button className="btn btn-danger btn-sm" onClick={() => setActiveModal("delete")}>
-              <i className="fa-solid fa-trash me-2"></i> Delete
+              <i className="fa-solid fa-trash"></i> Delete
             </button>
           </div>
         </div>

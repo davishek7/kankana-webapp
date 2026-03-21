@@ -35,7 +35,7 @@ function Bookings() {
           <h2 className="text-xl font-bold">
             Manage Bookings
           </h2>
-          <Link to="/bookings/new" className="btn btn-outline-info btn-sm">
+          <Link to="/bookings/new" className="btn btn-success btn-sm">
             <i className="fa-solid fa-plus"></i> Add New Booking
           </Link>
         </div>

@@ -56,10 +56,10 @@ function AddPaymentModal({ isOpen, onClose }) {
           <input type="date" name="date" className="form-control" />
         </div>
         <div className="d-flex justify-content-end">
-          <button className="btn btn-secondary me-2" onClick={onClose}>
+          <button className="btn btn-outline-secondary btn-sm me-2" onClick={onClose}>
             Cancel
           </button>
-          <button className="btn btn-primary" type="submit">
+          <button className="btn btn-success btn-sm" type="submit">
             Save
           </button>
         </div>

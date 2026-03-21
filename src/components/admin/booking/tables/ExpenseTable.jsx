@@ -25,7 +25,7 @@ function ExpenseTable({ expenses, onEdit }) {
                     <td>
                       <button
                         onClick={() => onEdit(expense)}
-                        className="btn btn-primary btn-sm"
+                        className="btn btn-outline-primary btn-sm"
                       >
                         <i className="fa-solid fa-pen-to-square"></i> Edit
                       </button>
