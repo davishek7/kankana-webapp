@@ -204,23 +204,23 @@ function Invoice() {
           {/* Right: Amount Details */}
           <div className="text-end">
             <p className="mb-1">
-              <strong>Total Rate:</strong> ₹{data.total_rate}
+              <strong>Subtotal:</strong> ₹{data.total_rate}
             </p>
             <p className="mb-1">
               <strong>Discount:</strong> ₹{data.discount}
             </p>
             <p className="mb-1">
-              <strong>Final Rate:</strong> ₹{data.final_amount}
+              <strong>Total Amount:</strong> ₹{data.final_amount}
             </p>
             <p className="mb-1">
-              <strong>Advance:</strong> ₹{data.advance}
+              <strong>Advance Paid:</strong> ₹{data.advance}
             </p>
             <p className="mb-1">
-              <strong>Paid (incl. advance):</strong> ₹{data.paid_amount}
+              <strong>Total Paid:</strong> ₹{data.paid_amount}
             </p>
             {data.payment_status !== "Fully Paid" && (
               <p className="fs-5 fw-bold text-danger mb-0">
-                <strong>Net Payable:</strong> ₹{data.due_amount}
+                <strong>Balance Due:</strong> ₹{data.due_amount}
               </p>
             )}
           </div>

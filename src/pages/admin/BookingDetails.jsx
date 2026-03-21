@@ -14,7 +14,6 @@ import PaymentStatus from "../../components/admin/booking/PaymentStatus";
 import BookingAndCustomerInfo from "../../components/admin/booking/BookingAndCustomerInfo";
 import ExpenseTable from "../../components/admin/booking/tables/ExpenseTable";
 
-
 export default function BookingDetails() {
   const booking = useLoaderData();
   const navigate = useNavigate();
@@ -27,12 +26,12 @@ export default function BookingDetails() {
     const response = await apiFetch(`booking/${booking.booking_id}/`, {
       method: "DELETE",
     });
-    const data = await response.json()
-    if (response.status >= 400){
-        toast.error(data.message)
-        return
+    const data = await response.json();
+    if (response.status >= 400) {
+      toast.error(data.message);
+      return;
     }
-    toast.success(data.message)
+    toast.success(data.message);
     navigate("/bookings");
     closeModal();
   };

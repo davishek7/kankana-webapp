@@ -2,13 +2,13 @@ function BookingSummary({ booking }) {
   return (
     <div className="row mb-4">
       <div className="col-md-2">
-        <strong>Total:</strong> ₹{booking.total_rate}
+        <strong>Item Subtotal:</strong> ₹{booking.total_rate}
       </div>
       <div className="col-md-2">
-        <strong>Discount:</strong> ₹{booking.discount}
+        <strong>Package Discount:</strong> {booking.discount > 0 ? `- ₹${booking.discount}` : '₹0'}
       </div>
       <div className="col-md-2">
-        <strong>Final:</strong> ₹{booking.final_amount}
+        <strong>Net Payable:</strong> ₹{booking.final_amount}
       </div>
       <div className="col-md-2">
         <strong>Total Expenses:</strong> ₹{booking.total_expense}
