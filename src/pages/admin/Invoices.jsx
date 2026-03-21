@@ -6,6 +6,7 @@ import {
   INVOICE_ACTIONS,
 } from "../../constants/invoice.constants";
 import { apiFetch } from "../../utils/api";
+import ListPagesHeader from "../../components/admin/ui/ListPagesHeader";
 
 function Invoices() {
   const { initialRows, total, limit } = useLoaderData();
@@ -27,9 +28,7 @@ function Invoices() {
   };
   return (
     <>
-      <div className="d-flex justify-content-between align-items-center mt-3 mb-3">
-        <h2 className="text-xl font-bold">Manage Invoices</h2>
-      </div>
+      <ListPagesHeader title="Manage Invoices" />
       <DataTable
         columns={INVOICE_COLUMNS}
         data={invoices}

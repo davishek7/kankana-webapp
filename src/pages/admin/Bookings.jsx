@@ -6,6 +6,7 @@ import {
   BOOKING_ACTIONS,
 } from "../../constants/booking.constants";
 import { apiFetch } from "../../utils/api";
+import ListPagesHeader from "../../components/admin/ui/ListPagesHeader";
 
 function Bookings() {
   const { initialRows, total, limit } = useLoaderData();
@@ -30,25 +31,22 @@ function Bookings() {
     setBookings(initialRows);
   }, [initialRows]);
   return (
-      <>
-        <div className="d-flex justify-content-between align-items-center mt-3 mb-3">
-          <h2 className="text-xl font-bold">
-            Manage Bookings
-          </h2>
-          <Link to="/bookings/new" className="btn btn-success btn-sm">
-            <i className="fa-solid fa-plus"></i> Add New Booking
-          </Link>
-        </div>
-        <DataTable
-          columns={BOOKING_COLUMNS}
-          data={bookings}
-          actions={BOOKING_ACTIONS}
-          page={page}
-          totalPages={totalPages}
-          fetchPage={fetchPage}
-          showPagination={true}
-        />
-      </>
+    <>
+      <ListPagesHeader
+        title="Manage Bookings"
+        buttonText="Add New Booking"
+        buttonLink="/bookings/new"
+      />
+      <DataTable
+        columns={BOOKING_COLUMNS}
+        data={bookings}
+        actions={BOOKING_ACTIONS}
+        page={page}
+        totalPages={totalPages}
+        fetchPage={fetchPage}
+        showPagination={true}
+      />
+    </>
   );
 }
 

@@ -7,6 +7,7 @@ import {
 } from "../../constants/gallery.constants";
 import { apiFetch } from "../../utils/api";
 import AddImageModal from "../../components/admin/gallery/AddImageModal";
+import ListPagesHeader from "../../components/admin/ui/ListPagesHeader";
 
 function Gallery() {
   const [activeModal, setActiveModal] = useState(null);
@@ -20,8 +21,7 @@ function Gallery() {
 
   const fetchPage = async (newPage) => {
     const offset = (newPage - 1) * limit;
-    const res = await apiFetch(`gallery/?limit=${limit}&offset=${offset}`, 
-  );
+    const res = await apiFetch(`gallery/?limit=${limit}&offset=${offset}`);
     const responseData = await res.json();
     const data = responseData.data;
 
@@ -35,29 +35,22 @@ function Gallery() {
 
   return (
     <>
-        <div className="d-flex justify-content-between align-items-center mt-3 mb-3">
-          <h2 className="text-xl font-bold">
-            Manage Uploaded Images
-          </h2>
-          <button
-            onClick={() => setActiveModal("add-image")}
-            className="btn btn-success btn-sm"
-          >
-            <i className="fa-solid fa-cloud-arrow-up"></i> Upload New Image
-          </button>
-        </div>
-        <DataTable
-          columns={GALLERY_COLUMNS}
-          data={images}
-          actions={GALLERY_ACTIONS}
-          showPagination={true}
-          page={page}
-          totalPages={totalPages}
-          fetchPage={fetchPage}
-        />
-        {activeModal === "add-image" && (
-          <AddImageModal isOpen onClose={closeModal} />
-        )}
+      <ListPagesHeader
+        title="Manage Uploaded Images"
+        setActiveModal={setActiveModal}
+      />
+      <DataTable
+        columns={GALLERY_COLUMNS}
+        data={images}
+        actions={GALLERY_ACTIONS}
+        showPagination={true}
+        page={page}
+        totalPages={totalPages}
+        fetchPage={fetchPage}
+      />
+      {activeModal === "add-image" && (
+        <AddImageModal isOpen onClose={closeModal} />
+      )}
     </>
   );
 }

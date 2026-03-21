@@ -14,6 +14,7 @@ import PaymentStatus from "../../components/admin/booking/PaymentStatus";
 import BookingAndCustomerInfo from "../../components/admin/booking/BookingAndCustomerInfo";
 import ExpenseTable from "../../components/admin/booking/tables/ExpenseTable";
 
+
 export default function BookingDetails() {
   const booking = useLoaderData();
   const navigate = useNavigate();
@@ -36,6 +37,8 @@ export default function BookingDetails() {
     closeModal();
   };
 
+  const isLocked = booking.payment_status === "Fully Paid";
+
   return (
     <div className="container my-4">
       {/* Booking Details */}
@@ -48,7 +51,7 @@ export default function BookingDetails() {
           <Link className="btn btn-outline-primary btn-sm" to="/bookings">
             <i className="fa-solid fa-arrow-left me"></i> Back
           </Link>
-          {["Unpaid", "Partially Paid"].includes(booking.payment_status) && (
+          {!isLocked && (
             <button
               className="btn btn-danger btn-sm"
               onClick={() => setActiveModal("delete")}
@@ -74,6 +77,7 @@ export default function BookingDetails() {
         <button
           className="btn btn-sm btn-primary"
           onClick={() => setActiveModal("add-item")}
+          disabled={isLocked}
         >
           + Add Item
         </button>
@@ -87,6 +91,7 @@ export default function BookingDetails() {
         <button
           className="btn btn-sm btn-primary"
           onClick={() => setActiveModal("add-payment")}
+          disabled={isLocked}
         >
           + Add Payment
         </button>
@@ -101,6 +106,7 @@ export default function BookingDetails() {
           <button
             className="btn btn-sm btn-primary"
             onClick={() => setActiveModal("add-expense")}
+            disabled={isLocked}
           >
             + Add Expense
           </button>

@@ -1,9 +1,9 @@
 function PaymentStatus({ booking }) {
   return (
-      <div className="mt-3">
-        <strong>Status:</strong>{" "}
+      <p className="fw-semibold mb-0">
+        Payment Status:{" "}
         <span
-          className={`fs-6 badge px-2 py-1 ${
+          className={`badge px-2 py-1 ${
             booking.payment_status === "Fully Paid"
               ? "bg-success"
               : booking.payment_status === "Partially Paid"
@@ -13,7 +13,7 @@ function PaymentStatus({ booking }) {
         >
           {booking.payment_status}
         </span>
-      </div>
+      </p>
   )
 }
 

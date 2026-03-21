@@ -6,6 +6,7 @@ import {
   CONTACT_ACTIONS,
 } from "../../constants/contact.constants";
 import { apiFetch } from "../../utils/api";
+import ListPagesHeader from "../../components/admin/ui/ListPagesHeader";
 
 function Contacts() {
   const { initialRows, total, limit } = useLoaderData();
@@ -25,9 +26,7 @@ function Contacts() {
   };
   return (
     <>
-      <div className="d-flex justify-content-between align-items-center mt-3 mb-3">
-        <h2 className="text-xl font-bold">Manage Contacts</h2>
-      </div>
+      <ListPagesHeader title="Manage Contacts" />
       <DataTable
         columns={CONTACT_COLUMNS}
         data={contacts}
