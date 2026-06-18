@@ -106,7 +106,7 @@ export default function BookingDetails() {
           <button
             className="btn btn-sm btn-primary"
             onClick={() => setActiveModal("add-expense")}
-            disabled={isLocked}
+            // disabled={isLocked}
           >
             + Add Expense
           </button>
