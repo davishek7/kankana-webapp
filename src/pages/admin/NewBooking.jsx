@@ -131,6 +131,8 @@ export default function NewBooking() {
             <option value="Reception">Reception</option>
             <option value="Haldi">Haldi</option>
             <option value="Party">Party</option>
+            <option value="Briddhi">Briddhi</option>
+            <option value="Aiburobhat">Aiburobhat</option>
           </select>
         </div>
 
