@@ -46,6 +46,8 @@ function AddItemModal({ isOpen, onClose }) {
             <option>Reception</option>
             <option>Haldi</option>
             <option>Party</option>
+            <option>Briddhi</option>
+            <option>Aiburobhat</option>
           </select>
         </div>
         <div className="mb-2">
